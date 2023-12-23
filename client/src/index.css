@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&family=Open+Sans&family=Poppins:wght@200;300;400&display=swap');
+
+/* Font families to be used throughout the headings and headlines */
+/* 
+font-family: 'Open Sans', sans-serif;
+font-family: 'Poppins', sans-serif;
+*/
+
+/* Font families to be used in application */
+/* 
+font-family: 'Poppins', sans-serif;
+*/
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
