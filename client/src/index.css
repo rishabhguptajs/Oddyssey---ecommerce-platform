@@ -15,8 +15,31 @@ font-family: 'Poppins', sans-serif;
 font-family: 'Poppins', sans-serif;
 */
 
+:root{
+  --primary-red-color: #e13453;
+  --primary-dark-red-color: #ae233c;
+  --primary-light-red-color: rgb(255, 225, 226);
+  --primary-black-color: #0a090a;
+  --light-grey-text: #7e7e7e;
+}
+
+::-webkit-scrollbar {
+  width: 12px; /* width of the scrollbar */
+  background-color: var(--primary-light-red-color);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--primary-red-color);
+   /* height of the scrollbar thumb */
+}
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+h1{
+  font-size: 2rem;
 }
