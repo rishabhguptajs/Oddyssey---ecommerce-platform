@@ -1,13 +1,14 @@
 import './App.css';
 import Layout from './components/Layouts/Layout.js';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <>
-      <Layout>
-        <h1> Oddyssey </h1>
-      </Layout>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
