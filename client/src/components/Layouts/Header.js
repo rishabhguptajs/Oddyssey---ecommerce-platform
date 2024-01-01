@@ -36,23 +36,27 @@ const Header = () => {
         />
       </NavbarContent>
       <NavbarBrand>
-        <p className="font-bold text-inherit"> Oddyssey </p>
+        <p className="font-bold text-inherit"> 
+          <NavLink to="/">
+            Oddyssey
+          </NavLink>
+        </p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link href="/categories" color="foreground">
-            Categories
-          </Link>
+          <NavLink to="/products" color="foreground" className="hover:text-[#e13453]">
+            Products
+          </NavLink>
         </NavbarItem>
         <NavbarItem>
-          <Link href="/about" color="foreground">
+          <NavLink to="/about" color="foreground" className="hover:text-[#e13453]">
             About Us
-          </Link>
+          </NavLink>
         </NavbarItem>
         <NavbarItem>
-          <Link href="/contact" color="foreground">
+          <NavLink to="/contact" color="foreground" className="hover:text-[#e13453]">
             Contact Us
-          </Link>
+          </NavLink>
         </NavbarItem>
         <NavbarItem>
           <Input
@@ -100,12 +104,12 @@ const Header = () => {
         ) : (
           <>
             <NavbarItem className="hidden lg:flex">
-              <Link href="/login" color="foreground">
+              <NavLink to="/login" color="foreground">
                 Login
-              </Link>
+              </NavLink>
             </NavbarItem>
             <NavbarItem>
-              <Button as={Link} href="/signup" color="danger" variant="flat">
+              <Button as={NavLink} to="/signup" color="danger" variant="flat">
                 Sign Up
               </Button>
             </NavbarItem>
