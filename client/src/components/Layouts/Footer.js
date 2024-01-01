@@ -1,19 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
     <div className="flex flex-col items-center m-4 bg-[#0a090a] p-10 md:pt-20 md:pb-20 rounded-lg">
-      <h2 className="text-2xl font-bold text-white mb-5">Stay Updated</h2>
-      <p className="mb-5 text-center text-gray-400">
+      <h2 className="text-2xl font-bold text-white mb-5 font_styling">Stay Updated</h2>
+      <p className="mb-5 text-center text-gray-400 font_styling">
         Subscribe to our newsletter and get all the updates on our latest products.
       </p>
       <div className="w-full max-w-sm flex items-center rounded-lg overflow-hidden">
         <input
-          className="flex mx-2 h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-gray-800 text-white"
+          className="flex mx-2 h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-gray-800 text-white font_styling"
           placeholder="Enter your email"
           type="email"
         />
-        <button className="inline-flex items-center justify-center rounded-md text-sm font-medium  h-10 px-4 py-2 bg-[#e13453] hover:bg-[#ae233c] text-white">
+        <button className="inline-flex items-center justify-center rounded-md text-sm font-medium  h-10 px-4 py-2 bg-[#e13453] hover:bg-[#ae233c] text-white font_styling">
           Subscribe
         </button>
       </div>
@@ -33,37 +34,37 @@ const Footer = () => {
       </nav>
       <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full max-w-3xl">
         <div className="mb-5 md:mb-0 space-y-4">
-          <h2 className="text-lg font-bold text-white">Quick Links</h2>
-          <a className="block text-gray-400 hover:text-[#e13453] transition-colors" href="#">
+          <h2 className="text-lg font-bold text-white font_styling">Quick Links</h2>
+          <Link className="block text-gray-400 hover:text-[#e13453] transition-colors font_styling" to="/about">
             About Us
-          </a>
-          <a className="block text-gray-400 hover:text-[#e13453] transition-colors" href="#">
+          </Link>
+          <Link className="block text-gray-400 hover:text-[#e13453] transition-colors font_styling" to="/contact">
             Contact Us
-          </a>
-          <a className="block text-gray-400 hover:text-[#e13453] transition-colors" href="#">
+          </Link>
+          <Link className="block text-gray-400 hover:text-[#e13453] transition-colors font_styling" to="/policy">
             Privacy Policy
-          </a>
-          <a className="block text-gray-400 hover:text-[#e13453] transition-colors" href="#">
+          </Link>
+          <Link className="block text-gray-400 hover:text-[#e13453] transition-colors font_styling" href="#">
             Terms &amp; Conditions
-          </a>
+          </Link>
         </div>
         <div className="space-y-4">
-          <h2 className="text-lg font-bold text-white">Our Products</h2>
-          <a className="block text-gray-400 hover:text-[#e13453] transition-colors" href="#">
+          <h2 className="text-lg font-bold text-white font_styling">Our Products</h2>
+          <Link className="block text-gray-400 hover:text-[#e13453] transition-colors font_styling" href="#">
             Fashion
-          </a>
-          <a className="block text-gray-400 hover:text-[#e13453] transition-colors" href="#">
+          </Link>
+          <Link className="block text-gray-400 hover:text-[#e13453] transition-colors font_styling" href="#">
             Electronics
-          </a>
-          <a className="block text-gray-400 hover:text-[#e13453] transition-colors" href="#">
+          </Link>
+          <Link className="block text-gray-400 hover:text-[#e13453] transition-colors font_styling" href="#">
             Furniture
-          </a>
-          <a className="block text-gray-400 hover:text-[#e13453] transition-colors" href="#">
+          </Link>
+          <Link className="block text-gray-400 hover:text-[#e13453] transition-colors font_styling" href="#">
             Beauty &amp; Health
-          </a>
+          </Link>
         </div>
       </div>
-      <p className="mt-10 text-[#7e7e7e] text-sm text-center">© Oddyssey. All rights reserved.</p>
+      <p className="mt-10 text-[#7e7e7e] text-sm text-center font_styling">© Oddyssey. All rights reserved.</p>
     </div>
   )
 }

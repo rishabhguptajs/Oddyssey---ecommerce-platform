@@ -3,9 +3,9 @@ import Layout from '../components/Layouts/Layout'
 
 const Policy = () => {
   return (
-    <Layout>
-        <h1> Policy page </h1>
-    </Layout>
+      <>
+        Policy Page
+      </>
   )
 }
 

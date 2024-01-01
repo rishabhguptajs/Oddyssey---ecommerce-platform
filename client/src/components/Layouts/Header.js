@@ -1,11 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import { FaAngleDown } from "react-icons/fa";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   NavbarMenuToggle,
   NavbarMenu,
@@ -20,12 +20,12 @@ import {
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
 
   const menuItems = ["Categories", "About Us", "Contact Us"];
   return (
     <Navbar
-      className="rounded-b-md"
+      className="rounded-b-md shadow-sm"
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
@@ -36,25 +36,68 @@ const Header = () => {
         />
       </NavbarContent>
       <NavbarBrand>
-        <p className="font-bold text-inherit"> 
-          <NavLink to="/">
+        <p className="font-bold text-inherit font_styling"> 
+          <Link to="/">
             Oddyssey
-          </NavLink>
+          </Link>
         </p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <NavLink to="/products" color="foreground" className="hover:text-[#e13453]">
+          <NavLink to="/products" color="foreground" className="hover:text-[#e13453] font_styling flex items-center px-1 transition-colors">
             Products
           </NavLink>
         </NavbarItem>
+        <Dropdown>
+          <NavbarItem>
+            <DropdownTrigger>
+              <Button
+                className="hover:text-[#e13453] font_styling flex items-center px-2 transition-colors text-md"
+                radius="sm"
+                variant="light"
+              >
+                Categories <FaAngleDown />
+              </Button>
+            </DropdownTrigger>
+          </NavbarItem>
+          <DropdownMenu
+            className="w-[340px]"
+            itemClasses={{
+              base: "gap-4",
+            }}
+          >
+            <DropdownItem
+              key="fashion"
+            >
+              <Link className="block hover:text-[#e13453] transition-colors font_styling" href="#">
+            Fashion
+          </Link>
+            </DropdownItem>
+            <DropdownItem
+              key="electronics"
+            >
+              <Link className="block hover:text-[#e13453] transition-colors font_styling" href="#">
+            Electronics
+          </Link>
+            </DropdownItem>
+            <DropdownItem
+              key="furniture"
+            >
+               <Link className="block  hover:text-[#e13453] transition-colors font_styling" href="#">
+            Furniture
+          </Link>
+            </DropdownItem>
+            <DropdownItem
+              key="beauty_health"
+            >
+              <Link className="block hover:text-[#e13453] transition-colors font_styling" href="#">
+            Beauty &amp; Health
+          </Link> 
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
         <NavbarItem>
-          <NavLink to="/about" color="foreground" className="hover:text-[#e13453]">
-            About Us
-          </NavLink>
-        </NavbarItem>
-        <NavbarItem>
-          <NavLink to="/contact" color="foreground" className="hover:text-[#e13453]">
+          <NavLink to="/contact" color="foreground" className="hover:text-[#e13453] font_styling px-1 transition-colors">
             Contact Us
           </NavLink>
         </NavbarItem>
@@ -89,14 +132,16 @@ const Header = () => {
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
               <DropdownItem key="profile" className="h-14 gap-2">
-                <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">rishabhgupta4523@gmail.com</p>
+                <p className="font-semibold font_styling">Signed in as</p>
+                <p className="font-semibold font_styling">rishabhgupta4523@gmail.com</p>
               </DropdownItem>
-              <DropdownItem key="settings"> Settings </DropdownItem>
-              <DropdownItem key="settings"> Cart </DropdownItem>
-              <DropdownItem key="settings"> Orders </DropdownItem>
-              <DropdownItem key="settings"> Help & Feedback </DropdownItem>
-              <DropdownItem key="logout" color="danger">
+              <DropdownItem key="settings" className="font_styling"> Settings </DropdownItem>
+              <DropdownItem key="settings" className="font_styling"> Cart </DropdownItem>
+              <DropdownItem key="settings" className="font_styling"> Orders </DropdownItem>
+              <DropdownItem key="settings" className="font_styling"> Help & Feedback </DropdownItem>
+              <DropdownItem key="logout" color="danger" onClick={() => {
+                setIsLoggedIn(false);
+              }} className="font_styling">
                 Log Out
               </DropdownItem>
             </DropdownMenu>
