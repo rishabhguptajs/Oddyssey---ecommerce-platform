@@ -23,7 +23,7 @@ const Layout = ({children, title, description, keywords, author}) => {
 };
 
 Layout.defaultProps = {
-  title: "Oddyssey",
+  title: "Home | Oddyssey - Buy unique and niche wooden products, handmade by some of India's finest craftsmen",
   description: "We are a small business that sells handmade products",
   keywords: "handmade, products, unique, niche products, wooden, local handmade furniture",
   author: "Rishabh Gupta",

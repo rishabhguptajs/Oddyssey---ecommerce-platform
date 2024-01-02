@@ -20,7 +20,7 @@ import {
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const menuItems = ["Categories", "About Us", "Contact Us"];
   return (
@@ -154,7 +154,7 @@ const Header = () => {
               </NavLink>
             </NavbarItem>
             <NavbarItem>
-              <Button as={NavLink} to="/signup" color="danger" variant="flat">
+              <Button as={NavLink} to="/register" color="danger" variant="flat">
                 Sign Up
               </Button>
             </NavbarItem>
