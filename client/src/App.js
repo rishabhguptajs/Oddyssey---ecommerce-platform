@@ -8,6 +8,7 @@ import Products from "./pages/Products.js";
 import Policy from "./pages/Policy.js";
 import PageNotFound from "./pages/PageNotFound.js";
 import Register from "./pages/Auth/Register.js";
+import Login from "./pages/Auth/Login.js";
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/policy" element={<Policy />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
