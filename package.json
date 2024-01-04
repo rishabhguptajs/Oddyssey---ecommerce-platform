@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "client": "npm start --prefix ./client",
+    "dev":"concurrently \"npm run server\" \"npm run client\""
+
   },
   "keywords": [],
   "author": "Rishabh",
@@ -16,7 +19,9 @@
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "axios": "^1.6.4",
     "bcrypt": "^5.1.1",
+    "concurrently": "^8.2.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
@@ -24,6 +29,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.0.2",
     "react-icons": "^4.12.0",
-    "react-router-dom": "^6.21.1"
+    "react-router-dom": "^6.21.1",
+    "react-toastify": "^9.1.3"
   }
 }

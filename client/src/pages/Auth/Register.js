@@ -1,45 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layouts/Layout";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import toast from 'react-hot-toast';
+import axios from "axios";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(0);
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        '/api/v1/auth/register', 
+        {name, email, password, phone, address}
+      );
+    if(res && res.data.success){
+      toast.success(res.data.message);
+      navigate('/login');
+    } else {
+      toast.error(res.data.message);
+    }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    }
+  }
+  console.log(process.env.REACT_API);
+
   return (
-    <Layout>
-      <div className="align-middle flex items-center w-full p-5 h-full">
+    <Layout title={"Sign Up | Oddyssey"}>
+      <div className="align-middle rounded-lg flex flex-col items-center w-full p-3 h-full bg-[#e13453]">
         <form
           action=""
-          className="align-middle w-fit p-5 flex flex-col items-center border-solid border-1 border-gray-400 mx-auto rounded-md shadow-[#e13453] shadow-medium"
+          className="align-middle bg-[#fdd7d8] w-fit px-5 py-2 flex flex-col items-center border-solid border-1 border-gray-400 mx-auto rounded-md shadow-[#e13453] shadow-medium"
+          onSubmit={handleSubmit}
         >
-          <h1 className="py-3">Register Form</h1>
+          <h1 className="mb-2 font_styling">Register Form</h1>
           <div className="mb-3">
-            <label htmlFor="exampleInputName" className="form-label w-3">
+            <label htmlFor="exampleInputName" className="font_styling form-label w-3 py-2">
               Name
             </label>
             <input
               type="text"
-              className="form-control w-[20vw]"
+              className="form-control w-[20vw] font_styling"
               id="exampleInputName"
               aria-describedby="nameHelp"
-              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
             />
-            <label htmlFor="exampleInputEmail1" className="form-label">
+            <label htmlFor="exampleInputEmail1" className="font_styling form-label">
               Email address
             </label>
             <input
               type="email"
-              className="form-control w-[20vw]"
+              className="form-control w-[20vw] font_styling"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
-            <div id="emailHelp" className="form-text">
+            <div id="emailHelp" className="form-text font_styling">
               We'll never share your email with anyone else.
             </div>
-          </div>
-          <div className="mb-3">
             <label
               htmlFor="exampleInputPassword1"
-              className="form-label w-[20vw]"
+              className="form-label w-[20vw] font_styling"
             >
               Password
             </label>
@@ -47,18 +80,49 @@ const Register = () => {
               type="password"
               className="form-control"
               id="exampleInputPassword1"
-              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
+            <label
+              htmlFor="inputPhone"
+              className="form-label w-[20vw] font_styling"
+            >
+              Phone
+            </label>
+            <input
+              type="tel"
+              className="form-control"
+              id="inputPhone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />  
+            <label
+              htmlFor="inputAddress"
+              className="form-label w-[20vw] font_styling"
+            >
+              Address
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="inputAddress"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              required
+            />  
           </div>
-          <div>
-            <Link to="/login" className="btn btn-primary bg-blue-600">
-              Login
-            </Link>
             <button type="submit" className="btn btn-primary bg-blue-600">
               Submit
             </button>
-          </div>
         </form>
+        <div className="flex flex-row items-center mt-2">
+          <p className="py-1 mx-3 text-white">Already have an account?</p>
+          <Link to="/login" className="bg-[#210e11] px-4 py-2 text-white rounded-lg hover:bg-[#443a3c] hover:shadow-xl">
+            Login
+          </Link>
+        </div>
       </div>
     </Layout>
   );
