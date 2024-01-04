@@ -20,6 +20,7 @@ font-family: 'Poppins', sans-serif;
   --primary-dark-red-color: #ae233c;
   --primary-light-red-color: #fdd7d8;
   --primary-black-color: #0a090a;
+  --primary-yellowish-green-color: #a2fd2c;
   --light-grey-text: #7e7e7e;
 }
 
@@ -30,7 +31,7 @@ font-family: 'Poppins', sans-serif;
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: var(--primary-red-color);
+  background-color: var(--primary-yellowish-green-color);
 }
 
 *{
