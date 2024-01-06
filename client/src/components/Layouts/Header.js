@@ -68,6 +68,7 @@ const Header = () => {
                 className="hover:text-[#e13453] font_styling flex items-center px-2 transition-colors text-md"
                 radius="sm"
                 variant="light"
+                aria-label="Categories"
               >
                 Categories <FaAngleDown />
               </Button>
@@ -81,6 +82,7 @@ const Header = () => {
           >
             <DropdownItem
               key="fashion"
+              aria-label="Fashion"
             >
               <Link className="block hover:text-[#e13453] transition-colors font_styling" href="#">
             Fashion
@@ -88,6 +90,7 @@ const Header = () => {
             </DropdownItem>
             <DropdownItem
               key="electronics"
+              aria-label="Electronics"
             >
               <Link className="block hover:text-[#e13453] transition-colors font_styling" href="#">
             Electronics
@@ -95,6 +98,7 @@ const Header = () => {
             </DropdownItem>
             <DropdownItem
               key="furniture"
+              aria-label="Furniture"
             >
                <Link className="block  hover:text-[#e13453] transition-colors font_styling" href="#">
             Furniture
@@ -102,6 +106,7 @@ const Header = () => {
             </DropdownItem>
             <DropdownItem
               key="beauty_health"
+              aria-label="Beauty &amp; Health"
             >
               <Link className="block hover:text-[#e13453] transition-colors font_styling" href="#">
             Beauty &amp; Health

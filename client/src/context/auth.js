@@ -17,7 +17,8 @@ const AuthProvider = ({ children }) => {
                 token: pData.token,
             })
         }
-    }, [auth])
+        // eslint-disable-next-line
+    }, [])
 
     return(
         <AuthContext.Provider value={[auth, setAuth]}>
