@@ -22,6 +22,20 @@ font-family: 'Poppins', sans-serif;
   --primary-black-color: #0a090a;
   --primary-yellowish-green-color: #a2fd2c;
   --light-grey-text: #7e7e7e;
+  --light-grey-background: #f5f5f5;
+  --light-grey-border: #e6e6e6;
+  --light-grey-border-hover: #d9d9d9;
+  --light-grey-background-hover: #f0f0f0;
+  --light-grey-background-active: #e6e6e6;
+  --primary-purplish-blue-color: #3f51b5;
+  --primary-dark-purplish-blue-color: #303f9f;
+  --primary-light-purplish-blue-color: #c5cae9;
+  --primary-yellow-color: #ffeb3b;
+  --primary-dark-yellow-color: #fbc02d;
+  --primary-light-yellow-color: #fffde7;
+  --primary-green-color: #4caf50;
+  --primary-dark-green-color: #388e3c;
+  --primary-light-green-color: #c8e6c9;
 }
 
 ::-webkit-scrollbar {
