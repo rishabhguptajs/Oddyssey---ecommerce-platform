@@ -9,6 +9,7 @@ import Policy from "./pages/Policy.js";
 import PageNotFound from "./pages/PageNotFound.js";
 import Register from "./pages/Auth/Register.js";
 import Login from "./pages/Auth/Login.js";
+import Dashboard from "./pages/user/Dashboard.js";
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
