@@ -6,13 +6,14 @@ const router = express.Router();
 
 // ALL ROUTING DONE HERE!!
 
-// register -> using post method
 router.post('/register', registerController);   
 
-// login -> using post method
 router.post('/login', loginController);
 
-// test routes here
 router.get('/test', requireSignIn, isAdmin, testController);
+
+router.get('/user-auth', requireSignIn, (req, res) => {
+    res.status(200).send({ ok: true });
+})
 
 export default router;  
