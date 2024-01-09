@@ -1,34 +1,26 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layouts/Layout";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useAuth } from "../../context/auth";
 
-const Login = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
-  const [auth, setAuth] = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/login", {
+      const res = await axios.post("/api/v1/auth/forgot-password", {
         email,
-        password,
+        newPassword,
+        answer,
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
-        setAuth({
-          ...auth,
-          user: res.data.user,
-          token: res.data.token,
-        })
-        localStorage.setItem("auth", JSON.stringify(res.data))
-        navigate(location.state || "/");
+        navigate("/login");
       } else {
         toast.error(res.data.message);
       }
@@ -37,18 +29,16 @@ const Login = () => {
       toast.error("Something went wrong!");
     }
   };
-  console.log(process.env.REACT_API);
   return (
-    <Layout title={"Login | Oddyssey"}>
-      <div className="align-middle p-5 rounded-lg flex flex-col items-center w-full h-[100vh] bg-[#e13453]">
+    <Layout title={"Forgot Password | Oddyssey"}>
+      <div className="align-middle items-center rounded-lg flex flex-col  w-full p-3 h-[100vh] bg-[#e13453]">
         <form
           action=""
           className="align-middle bg-[#fdd7d8] w-fit px-10 py-5 flex flex-col items-center border-solid border-1 border-gray-400 mx-auto rounded-md shadow-[#e13453] shadow-medium"
           onSubmit={handleSubmit}
         >
-          <h1 className="mb-2 font_styling">Login Form</h1>
+          <h1 className="mb-2 font_styling">Reset Password</h1>
           <div className="mb-3">
-            
             <label
               htmlFor="exampleInputEmail1"
               className="font_styling form-label mt-4"
@@ -68,6 +58,21 @@ const Login = () => {
               We'll never share your email with anyone else.
             </div>
             <label
+              htmlFor="inputAnswer"
+              className="font_styling form-label mt-4"
+            >
+              Enter your favourite color
+            </label>
+            <input
+              type="text"
+              className="form-control w-[20vw] font_styling"
+              id="inputAnswer"
+              aria-describedby="answerHelp"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              required
+            />
+            <label
               htmlFor="exampleInputPassword1"
               className="form-label w-[20vw] font_styling mt-4"
             >
@@ -77,29 +82,18 @@ const Login = () => {
               type="password"
               className="form-control"
               id="exampleInputPassword1"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               required
             />
-            
-            
           </div>
           <button type="submit" className="btn btn-primary mt-4 bg-blue-600">
             Submit
           </button>
         </form>
-        <div className="flex flex-row items-center mt-2">
-          <p className="py-3 mx-3 text-white">Forgot Password?</p>
-          <button
-            onClick={() => navigate("/forgot-password")}
-            className="bg-[#210e11] px-4 py-2 text-white rounded-lg hover:bg-[#443a3c] hover:shadow-xl"
-          >
-            Reset
-          </button>
-        </div>
       </div>
     </Layout>
   );
 };
 
-export default Login;
+export default ForgotPassword;

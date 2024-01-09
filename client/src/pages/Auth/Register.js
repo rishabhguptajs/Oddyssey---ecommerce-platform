@@ -11,6 +11,7 @@ const Register = () => {
   const [phone, setPhone] = useState(0);
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,7 +19,7 @@ const Register = () => {
     try {
       const res = await axios.post(
         '/api/v1/auth/register', 
-        {name, email, password, phone, address}
+        {name, email, password, phone, answer, address}
       );
     if(res && res.data.success){
       toast.success(res.data.message);
@@ -110,6 +111,21 @@ const Register = () => {
               id="inputAddress"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              required
+            />  
+            <label
+              htmlFor="inputAnswer"
+              className="form-label w-[20vw] font_styling"
+            >
+              Answer
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="inputAnswer"
+              placeholder="What is your favourite color?"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
               required
             />  
           </div>
