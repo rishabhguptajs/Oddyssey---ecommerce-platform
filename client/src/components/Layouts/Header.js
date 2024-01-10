@@ -163,8 +163,8 @@ const Header = () => {
                   as="button"
                   className="transition-transform"
                   color="danger"
-                  name="RG"
-                  size="sm"
+                  name={auth.user.name}
+                  size="md"
                   src=""
                 />
               </DropdownTrigger>
@@ -173,11 +173,17 @@ const Header = () => {
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">rishabhgupta4523@gmail.com</p>
                 </DropdownItem>
-                <DropdownItem key="settings">Settings</DropdownItem>
-                <DropdownItem key="team_settings">Orders</DropdownItem>
-                <DropdownItem key="analytics">Cart</DropdownItem>
+                <DropdownItem key="dashboard">
+                  <NavLink to={`/dashboard/${auth.user.role === 1 ? 'admin' : ''}`}>Dashboard</NavLink>
+                </DropdownItem>
+                <DropdownItem key="cart">
+                  <NavLink to="/cart">Cart</NavLink>
+                </DropdownItem>
+                <DropdownItem key="settings">
+                  <NavLink to="/settings">Settings</NavLink>
+                </DropdownItem>
                 <DropdownItem key="help_and_feedback">
-                  Help & Feedback
+                  <NavLink to="/help_and_feedback">Help &amp; Feedback</NavLink>
                 </DropdownItem>
                 <DropdownItem
                   key="logout"
