@@ -15,6 +15,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from "./components/Routes/Private.js";
 import AdminRoute from "./components/Routes/AdminRoute.js";
 import AdminDashboard from "./pages/Admin/AdminDashboard.js";
+import CreateCategory from "./pages/Admin/CreateCategory.js";
+import CreateProduct from "./pages/Admin/CreateProduct.js";
+import Users from "./pages/Admin/Users.js";
 
 function App() {
   return (
@@ -30,10 +33,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} /> 
           <Route path="/dashboard" element={<PrivateRoute />}>
-            <Route path="" element={<Dashboard />} />
+            <Route path="user" element={<Dashboard />} />
           </Route>
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin/create-product" element={<CreateProduct />} />
+            <Route path="admin/create-category" element={<CreateCategory />} />
+            <Route path="admin/users" element={<Users />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

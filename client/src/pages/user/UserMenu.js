@@ -1,8 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-const AdminMenu = () => {
+import React from 'react'
+import Layout from '../../components/Layouts/Layout'
+import { NavLink } from 'react-router-dom'
+
+const UserMenu = () => {
   return (
-    <div className="flex flex-col h-fit pb-3 rounded-sm gap-4 m-4 justify-center align-top">
+    <Layout>
+        <div className="flex flex-col h-fit pb-3 rounded-sm gap-4 m-4 justify-center align-top">
       <NavLink
         to="/dashboard/admin"
         className="p-4 font_styling rounded-md  transition-shadow  justify-start border-solid border-2 border-[#e13453] hover:shadow-md bg-[#ffe9ea] cursor-pointer w-fit flex text-xl"
@@ -36,7 +39,8 @@ const AdminMenu = () => {
         </li>
       </ul>
     </div>
-  );
-};
+    </Layout>
+  )
+}
 
-export default AdminMenu;
+export default UserMenu

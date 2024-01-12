@@ -174,7 +174,7 @@ const Header = () => {
                   <p className="font-semibold">rishabhgupta4523@gmail.com</p>
                 </DropdownItem>
                 <DropdownItem key="dashboard">
-                  <NavLink to={`/dashboard/${auth.user.role === 1 ? 'admin' : ''}`}>Dashboard</NavLink>
+                  <NavLink to={`/dashboard/${auth.user.role === 1 ? 'admin' : 'user'}`}>Dashboard</NavLink>
                 </DropdownItem>
                 <DropdownItem key="cart">
                   <NavLink to="/cart">Cart</NavLink>
