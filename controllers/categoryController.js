@@ -11,7 +11,7 @@ export const createCategoryController = async(req, res) => {
         }
         const existingCategory = await categoryModel.findOne({ name });
         if(existingCategory) {
-            return res.status(401).send({
+            return res.status(200).send({
                 success : true,
                 message: "Category already exists"
             })
