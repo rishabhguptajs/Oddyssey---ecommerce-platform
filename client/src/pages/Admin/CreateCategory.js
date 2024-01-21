@@ -4,15 +4,41 @@ import AdminMenu from "../../components/Layouts/AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { get } from "mongoose";
-
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-  vacation: "warning",
-};
+import CategoryForm from "../../components/Form/CategoryForm";
+import { Button, Modal } from "antd";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
+  const [name, setName] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  // function for handling submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post("/api/v1/category/create-category", {
+        name,
+      });
+      if (data?.success) {
+        toast.success("Category created successfully.");
+        setName("");
+        getCategories();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error while creating category.");
+    }
+  };
 
   // function for getting all categories
   const getCategories = async () => {
@@ -36,10 +62,17 @@ const CreateCategory = () => {
         <div className="flex justify-start m-5 hover:shadow-md transition-shadow w-fit border-[#c5cae9] border-4">
           <AdminMenu />
         </div>
-        <div className="flex flex-col justify-center m-5 hover:shadow-md transition-shadow w-fit h-inherit p-4 border-[#c5cae9] border-4">
+        <div className="flex flex-col justify-center m-5 hover:shadow-md transition-shadow w-[70vw] h-inherit p-4 border-[#c5cae9] border-4">
           <h1 className="font-bold font_styling p-3 h-fit w-full">
             Manage Categories
           </h1>
+          <div>
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              value={name}
+              setValue={setName}
+            />
+          </div>
           <div>
             <table class="table">
               <thead>
@@ -49,11 +82,26 @@ const CreateCategory = () => {
                 </tr>
               </thead>
               <tbody>
-                {categories.map((category) => (
+                {categories?.map((category) => (
                   <tr>
                     <td key={category._id}>{category.name}</td>
                     <td>
-                      <button className="btn btn-primary">Edit</button>
+                      <Button type="primary" className="bg-blue-500" onClick={showModal}>
+                        Edit
+                      </Button>
+                      <Modal
+                        title="Basic Modal"
+                        open={isModalOpen}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
+                      >
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                      </Modal>
+                      <Button type="danger" className="bg-[#ff3b37] text-white mx-3">
+                        Delete
+                      </Button>
                     </td>
                   </tr>
                 ))}

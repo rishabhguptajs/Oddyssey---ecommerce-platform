@@ -14,7 +14,7 @@ const ProductComp = ({name, price, img, description, rating, stock}) => {
         <div className="font_styling">{rating}</div>
       </div>
 
-      <button className="bg-[#f5f5f5] border-[#f5f5f5] border-2 border-solid rounded-md p-2 mb-4 font_styling hover:bg-[#e13453] hover:text-white transition-colors hover:shadow-lg">
+      <button className="bg-[#f5f5f5] border-[#f5f5f5] border-2 border-solid rounded-md p-2 mb-4 font_styling transition-all hover:translate-y-[-3px] hover:bg-[#e13453] hover:text-white hover:shad hover:shadow-lg">
         Add to Cart
       </button>
     </div>
