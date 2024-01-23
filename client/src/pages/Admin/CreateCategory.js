@@ -10,6 +10,9 @@ import { Button, Modal } from "antd";
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [updatedName, setUpdatedName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -37,6 +40,45 @@ const CreateCategory = () => {
     } catch (error) {
       console.log(error);
       toast.error("Error while creating category.");
+    }
+  };
+
+  // function for handling update category
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.put(
+        `/api/v1/category/update-category/${selected._id}`,
+        { name: updatedName }
+      );
+      if (data?.success) {
+        toast.success("Category updated successfully.");
+        setSelected(null);
+        setUpdatedName("");
+        setVisible(false);
+        getCategories();
+      } else {
+        toast.error("Error while updating category.");
+      }
+    } catch (error) {
+      toast.error("Error while updating category.");
+    }
+  };
+
+  // delete category
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(`/api/v1/category/delete-category/${id}`);
+      if (data?.success) {
+        toast.success("Category deleted successfully.");
+        getCategories();
+      } else {
+        toast.error("Error while updating category.");
+      }
+    } catch (error) {
+      toast.error("Error while updating category.");
     }
   };
 
@@ -86,20 +128,23 @@ const CreateCategory = () => {
                   <tr>
                     <td key={category._id}>{category.name}</td>
                     <td>
-                      <Button type="primary" className="bg-blue-500" onClick={showModal}>
+                      <Button
+                        type="primary"
+                        className="bg-blue-500"
+                        onClick={() => {
+                          setVisible(true);
+                          setUpdatedName(category.name);
+                          setSelected(category);
+                        }}
+                      >
                         Edit
                       </Button>
-                      <Modal
-                        title="Basic Modal"
-                        open={isModalOpen}
-                        onOk={handleOk}
-                        onCancel={handleCancel}
+
+                      <Button
+                        type="danger"
+                        className="bg-[#ff3b37] text-white mx-3"
+                        onClick={() => {handleDelete(category._id)}}
                       >
-                        <p>Some contents...</p>
-                        <p>Some contents...</p>
-                        <p>Some contents...</p>
-                      </Modal>
-                      <Button type="danger" className="bg-[#ff3b37] text-white mx-3">
                         Delete
                       </Button>
                     </td>
@@ -109,6 +154,17 @@ const CreateCategory = () => {
             </table>
           </div>
         </div>
+        <Modal
+          onCancel={() => setVisible(false)}
+          footer={null}
+          visible={visible}
+        >
+          <CategoryForm
+            value={updatedName}
+            setValue={setUpdatedName}
+            handleSubmit={handleUpdate}
+          />
+        </Modal>
       </div>
     </Layout>
   );
