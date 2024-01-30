@@ -90,8 +90,8 @@ const CreateProduct = () => {
               </Option>
             ))}
           </Select>
-          <div className="my-3 w-fit">
-            <label className="my-2 bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] w-fit cursor-pointer hover:shadow-md font_styling text-sm transition-all">
+          <div className="my-3">
+            <label className="my-2 bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] w-[20vw] text-center cursor-pointer hover:shadow-md font_styling text-sm transition-all">
               {photo ? photo.name : "Upload Photo"}
               <input
                 type="file"
@@ -152,11 +152,10 @@ const CreateProduct = () => {
           </div>
           <div className="mb-3">
                 <Select
-                  bordered={false}
                   placeholder="Select Shipping "
                   size="large"
                   showSearch
-                  className="form-select mb-3"
+                  className="w-[20vw]"
                   onChange={(value) => {
                     setShipping(value);
                   }}
@@ -166,7 +165,7 @@ const CreateProduct = () => {
                 </Select>
               </div>
               <div className="mb-3">
-                <button className="btn btn-primary" onClick={handleCreate}>
+                <button className="my-2 bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] cursor-pointer hover:shadow-md font_styling text-sm transition-all w-[20vw]" onClick={handleCreate}>
                   CREATE PRODUCT
                 </button>
               </div>
