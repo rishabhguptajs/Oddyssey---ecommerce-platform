@@ -20,6 +20,7 @@ import CreateProduct from "./pages/Admin/CreateProduct.js";
 import Users from "./pages/Admin/Users.js";
 import Profile from "./pages/user/Profile.js";
 import Orders from "./pages/user/Orders.js";
+import AllProducts from './pages/Admin/Products.js'
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route path="admin/create-product" element={<CreateProduct />} />
             <Route path="admin/create-category" element={<CreateCategory />} />
             <Route path="admin/users" element={<Users />} />
+            <Route path="admin/products" element={<AllProducts />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
