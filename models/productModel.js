@@ -8,19 +8,19 @@ const productSchema = new mongoose.Schema(
     },
     slug: {
       type: String,
-    },
-    price: {
-      type: Number,
-      default: 0,
       required: true,
-    },
-    category: {
-      type: String,
-      ref: "Category",
-      required: true,   
     },
     description: {
       type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    category: {
+      type: mongoose.ObjectId,
+      ref: "Category",
       required: true,
     },
     quantity: {
@@ -34,7 +34,8 @@ const productSchema = new mongoose.Schema(
     shipping: {
       type: Boolean,
     },
-
-  }, { timestamps: true} );
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model("Products", productSchema);

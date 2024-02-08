@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const categorySchema = new mongoose.Schema({
   name: {
+    // type: mongoose.ObjectId ,
     type: String,
-    required: true,
-    unique: true,
+    // required: true,
+    // unique: true,
   },
   slug: {
     type: String,

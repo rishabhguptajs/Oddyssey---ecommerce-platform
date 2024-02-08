@@ -4,6 +4,7 @@ import AdminMenu from "../../components/Layouts/AdminMenu";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Card, CardFooter, Image, Button } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -33,26 +34,28 @@ const AllProducts = () => {
           <h1 className="font-bold font_styling p-3 h-fit w-full">
             All Products
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-row">
             {products.map((product) => (
-              <Card
-              isFooterBlurred
-              radius="lg"
-              className="border-none"
-            >
-              <Image
-                className="object-cover"
-                height={200}
-                src="https://as2.ftcdn.net/v2/jpg/05/31/26/65/1000_F_531266536_BOYa3SmzQm4YOr10a0HYa7NIeienqc5X.jpg"
-                width={200}
-              />
-              <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                <p className="text-tiny text-black">₹ {product.price}</p>
-                <Button className="text-tiny text-white bg-black/20" variant="flat" color="default" radius="lg" size="sm">
-                  Notify me
-                </Button>
-              </CardFooter>
-            </Card>
+              <Link
+                key={product._id}
+                to={`/dashboard/admin/product/${product.slug}`}
+              >
+                <div className="card m-2" style={{ width: "18rem" }}>
+                  <img
+                    className="card-img-top"
+                    src={`/api/v1/product/product-photo/${product._id}`}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{product.name}</h5>
+                    <p className="card-text">
+                      {product.description.substring(0, 100)}
+                    </p>
+                    <a href="#" className="btn btn-primary m-2">
+                      ₹ {product.price}
+                    </a>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
