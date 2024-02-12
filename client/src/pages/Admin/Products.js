@@ -34,29 +34,35 @@ const AllProducts = () => {
           <h1 className="font-bold font_styling p-3 h-fit w-full">
             All Products
           </h1>
-          <div className="flex flex-row">
-            {products.map((product) => (
-              <Link
-                key={product._id}
-                to={`/dashboard/admin/product/${product.slug}`}
-              >
-                <div className="card m-2" style={{ width: "18rem" }}>
-                  <img
-                    className="card-img-top"
-                    src={`/api/v1/product/product-photo/${product._id}`}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{product.name}</h5>
-                    <p className="card-text">
-                      {product.description.substring(0, 100)}
-                    </p>
-                    <a href="#" className="btn btn-primary m-2">
-                      ₹ {product.price}
-                    </a>
+          <div className="flex flex-row flex-wrap justify-center text-center">
+            {products.length > 0 ? (
+              products.map((product) => (
+                <Link
+                  key={product._id}
+                  to={`/dashboard/admin/product/${product.slug}`}
+                >
+                  <div className="card m-2" style={{ width: "18rem" }}>
+                    <img
+                      className="card-img-top"
+                      src={`/api/v1/product/product-photo/${product._id}`}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{product.name}</h5>
+                      <p className="card-text">
+                        {product.description.substring(0, 100)}
+                      </p>
+                      <a href="#" className="btn btn-primary m-2">
+                        ₹ {product.price}
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))
+            ) : (
+              <span className="my-[5rem] text-[2em] font_styling">
+                No products found
+              </span>
+            )}
           </div>
         </div>
       </div>

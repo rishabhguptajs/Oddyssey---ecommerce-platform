@@ -56,7 +56,7 @@ const UpdateProduct = () => {
       toast.error("Error while getting categories.");
     }
   };
-  
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -88,6 +88,18 @@ const UpdateProduct = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      let answer = window.prompt("Are You Sure want to delete this product ? ");
+      if (!answer) return;
+      await axios.delete(`/api/v1/product/delete-product/${id}`);
+      navigate("/dashboard/admin/products");
+      toast.success("Product deleted Succfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <Layout title={" Dashboard - Update Product "}>
@@ -115,7 +127,7 @@ const UpdateProduct = () => {
             ))}
           </Select>
           <div className="my-3">
-            <label className="my-2 bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] w-[20vw] text-center cursor-pointer hover:shadow-md font_styling text-sm transition-all">
+            <label className="my-2 w-full bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] text-center cursor-pointer hover:shadow-md font_styling text-sm transition-all">
               {photo ? photo.name : "Upload Photo"}
               <input
                 type="file"
@@ -195,12 +207,18 @@ const UpdateProduct = () => {
               <Option value="1">Yes</Option>
             </Select>
           </div>
-          <div className="mb-3">
+          <div className="mb-3 flex flex-row">
             <button
               className="my-2 bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] cursor-pointer hover:shadow-md font_styling text-sm transition-all w-[20vw]"
               onClick={handleUpdate}
             >
               UPDATE PRODUCT
+            </button>
+            <button
+              className="my-2 mx-2 bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] cursor-pointer hover:shadow-md font_styling text-sm transition-all w-[20vw]"
+              onClick={handleDelete}
+            >
+              DELETE PRODUCT
             </button>
           </div>
         </div>

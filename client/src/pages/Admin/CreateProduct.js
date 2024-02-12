@@ -9,7 +9,6 @@ const { Option } = Select;
 
 const CreateProduct = () => {
   const navigate = useNavigate();
-
   const [categories, setCategories] = useState([]);
   const [photo, setPhoto] = useState("");
   const [name, setName] = useState("");
@@ -24,7 +23,7 @@ const CreateProduct = () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
       if (data?.success) {
-        setCategories(data.categories);
+        setCategories(data?.categories);
       }
     } catch (error) {
       console.log(error);
@@ -34,20 +33,23 @@ const CreateProduct = () => {
 
   // function for handling submit
 
-  const handleCreate = async(e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
     try {
       const productData = new FormData();
-      productData.append('name', name);
+      productData.append("name", name);
       productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
       productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = await axios.post('/api/v1/product/create-product', productData);
+      const { data } = await axios.post(
+        "/api/v1/product/create-product",
+        productData
+      );
       if (data?.success) {
         toast.success("Product created successfully!");
-        navigate('/dashboard/admin/products');
+        navigate("/dashboard/admin/products");
         setName("");
         setDescription("");
         setPrice("");
@@ -60,7 +62,7 @@ const CreateProduct = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     getCategories();
@@ -84,8 +86,8 @@ const CreateProduct = () => {
               setCategory(value);
             }}
           >
-            {categories.map((category) => (
-              <Option key={category._id} value={category.name}>
+            {categories?.map((category) => (
+              <Option key={category._id} value={category._id}>
                 {category.name}
               </Option>
             ))}
@@ -151,24 +153,27 @@ const CreateProduct = () => {
             />
           </div>
           <div className="mb-3">
-                <Select
-                  placeholder="Select Shipping "
-                  size="large"
-                  showSearch
-                  className="w-[20vw]"
-                  onChange={(value) => {
-                    setShipping(value);
-                  }}
-                >
-                  <Option value="0">No</Option>
-                  <Option value="1">Yes</Option>
-                </Select>
-              </div>
-              <div className="mb-3">
-                <button className="my-2 bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] cursor-pointer hover:shadow-md font_styling text-sm transition-all w-[20vw]" onClick={handleCreate}>
-                  CREATE PRODUCT
-                </button>
-              </div>
+            <Select
+              placeholder="Select Shipping "
+              size="large"
+              showSearch
+              className="w-[20vw]"
+              onChange={(value) => {
+                setShipping(value);
+              }}
+            >
+              <Option value="0">No</Option>
+              <Option value="1">Yes</Option>
+            </Select>
+          </div>
+          <div className="mb-3">
+            <button
+              className="my-2 bg-[#e13453] text-white p-2 rounded-lg hover:translate-y-[-2px] cursor-pointer hover:shadow-md font_styling text-sm transition-all w-[20vw]"
+              onClick={handleCreate}
+            >
+              CREATE PRODUCT
+            </button>
+          </div>
         </div>
       </div>
     </Layout>
