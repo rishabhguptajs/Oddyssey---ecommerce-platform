@@ -49,9 +49,20 @@ const HomePage = () => {
                       <p className="card-text">
                         {product.description.substring(0, 100)}
                       </p>
-                      <a href="#" className="btn btn-primary m-2">
+                      <div
+                        href="#"
+                        className="bg-gray-900 hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg m-2"
+                      >
                         ₹ {product.price}
-                      </a>
+                      </div>
+                      <div className="flex flex-row w-full justify-between">
+                        <div className="mx-2 px-4 bg-[#0a090a] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg text-sm">
+                          Details
+                        </div>
+                        <div className="mx-2 px-3 bg-[#e13453] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg">
+                          Add to Cart
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))
