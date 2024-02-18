@@ -1,5 +1,5 @@
-import express from "express";
-import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
+import express from "express"
+import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js"
 import {
   createProductController,
   deleteProductController,
@@ -9,11 +9,12 @@ import {
   productFiltersController,
   productListController,
   productPhotoController,
+  searchProductController,
   updateProductController,
-} from "../controllers/productController.js";
-import formidale from "express-formidable";
+} from "../controllers/productController.js"
+import formidale from "express-formidable"
 
-const router = express.Router();
+const router = express.Router()
 
 // routes here
 
@@ -23,27 +24,29 @@ router.post(
   isAdmin,
   formidale(),
   createProductController
-);
+)
 router.put(
   "/update-product/:pid",
   requireSignIn,
   isAdmin,
   formidale(),
   updateProductController
-);
+)
 
-router.get("/get-product", getProductsController);
+router.get("/get-product", getProductsController)
 
-router.get("/get-product/:slug", getSingleProductController);
+router.get("/get-product/:slug", getSingleProductController)
 
-router.get("/product-photo/:pid", productPhotoController);
+router.get("/product-photo/:pid", productPhotoController)
 
-router.delete("/delete-product/:pid", deleteProductController);
+router.delete("/delete-product/:pid", deleteProductController)
 
-router.post("/product-filters", productFiltersController);
+router.post("/product-filters", productFiltersController)
 
-router.get("/product-count", productCountController);
+router.get("/product-count", productCountController)
 
-router.get("/product-list/:page", productListController);
+router.get("/product-list/:page", productListController)
 
-export default router;
+router.get("/search/:keyword", searchProductController)
+
+export default router
