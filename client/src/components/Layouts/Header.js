@@ -1,6 +1,6 @@
-import React from "react";
-import { NavLink, Link } from "react-router-dom";
-import { FaAngleDown } from "react-icons/fa";
+import React from "react"
+import { NavLink, Link } from "react-router-dom"
+import { FaAngleDown } from "react-icons/fa"
 import {
   Navbar,
   NavbarBrand,
@@ -16,26 +16,28 @@ import {
   DropdownItem,
   Input,
   Avatar,
-} from "@nextui-org/react";
-import { useAuth } from "../../context/auth";
-import toast from "react-hot-toast";
-import SearchInput from "../Form/SearchInput";
+} from "@nextui-org/react"
+import { useAuth } from "../../context/auth"
+import toast from "react-hot-toast"
+import SearchInput from "../Form/SearchInput"
+import { useCart } from "../../context/cart"
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [auth, setAuth] = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [auth, setAuth] = useAuth()
+  const [ cart ] = useCart();
 
-  const menuItems = ["Categories", "About Us", "Contact Us"];
+  const menuItems = ["Categories", "About Us", "Contact Us"]
 
   const handleLogout = () => {
     setAuth({
       ...auth,
       user: null,
       token: "",
-    });
-    localStorage.removeItem("auth");
-    toast.success("Logout Successful!");
-  };
+    })
+    localStorage.removeItem("auth")
+    toast.success("Logout Successful!")
+  }
 
   return (
     <Navbar
@@ -64,59 +66,15 @@ const Header = () => {
             Products
           </NavLink>
         </NavbarItem>
-        <Dropdown>
-          <NavbarItem>
-            <DropdownTrigger>
-              <Button
-                className="hover:text-[#e13453] font_styling flex items-center px-2 transition-colors text-md"
-                radius="sm"
-                variant="light"
-                aria-label="Categories"
-              >
-                Categories <FaAngleDown />
-              </Button>
-            </DropdownTrigger>
-          </NavbarItem>
-          <DropdownMenu
-            className="w-[340px]"
-            itemClasses={{
-              base: "gap-4",
-            }}
+        <NavbarItem>
+          <NavLink
+            to="/about"
+            color="foreground"
+            className="hover:text-[#e13453] font_styling px-1 transition-colors"
           >
-            <DropdownItem key="fashion" aria-label="Fashion">
-              <Link
-                className="block hover:text-[#e13453] transition-colors font_styling"
-                href="#"
-              >
-                Fashion
-              </Link>
-            </DropdownItem>
-            <DropdownItem key="electronics" aria-label="Electronics">
-              <Link
-                className="block hover:text-[#e13453] transition-colors font_styling"
-                href="#"
-              >
-                Electronics
-              </Link>
-            </DropdownItem>
-            <DropdownItem key="furniture" aria-label="Furniture">
-              <Link
-                className="block  hover:text-[#e13453] transition-colors font_styling"
-                href="#"
-              >
-                Furniture
-              </Link>
-            </DropdownItem>
-            <DropdownItem key="beauty_health" aria-label="Beauty &amp; Health">
-              <Link
-                className="block hover:text-[#e13453] transition-colors font_styling"
-                href="#"
-              >
-                Beauty &amp; Health
-              </Link>
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+            About Us
+          </NavLink>
+        </NavbarItem>
         <NavbarItem>
           <NavLink
             to="/contact"
@@ -162,10 +120,14 @@ const Header = () => {
                   <p className="font-semibold">{auth?.user?.email}</p>
                 </DropdownItem>
                 <DropdownItem key="dashboard">
-                  <NavLink to={`/dashboard/${auth.user.role === 1 ? 'admin' : 'user'}`}>Dashboard</NavLink>
+                  <NavLink
+                    to={`/dashboard/${auth.user.role === 1 ? "admin" : "user"}`}
+                  >
+                    Dashboard
+                  </NavLink>
                 </DropdownItem>
                 <DropdownItem key="cart">
-                  <NavLink to="/cart">Cart</NavLink>
+                  <NavLink to="/cart">Cart ({cart?.length})</NavLink>
                 </DropdownItem>
                 <DropdownItem key="settings">
                   <NavLink to="/settings">Settings</NavLink>
@@ -188,7 +150,7 @@ const Header = () => {
 
       <NavbarMenu>
         {menuItems.map((item, index) => {
-          <NavbarMenuItem key={`${item}-${index}`}>
+          ;<NavbarMenuItem key={`${item}-${index}`}>
             <Link
               className="w-full"
               href="#"
@@ -203,11 +165,11 @@ const Header = () => {
             >
               {item}
             </Link>
-          </NavbarMenuItem>;
+          </NavbarMenuItem>
         })}
       </NavbarMenu>
     </Navbar>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

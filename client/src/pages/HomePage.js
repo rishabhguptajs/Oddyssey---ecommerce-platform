@@ -4,9 +4,12 @@ import axios from "axios"
 import { Checkbox, Radio } from "antd"
 import { useNavigate } from "react-router-dom"
 import { Prices } from "../components/Prices"
+import { useCart } from "../context/cart"
+import toast from "react-hot-toast"
 
 const HomePage = () => {
   const navigate = useNavigate()
+  const [cart, setCart] = useCart()
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [checked, setChecked] = useState([])
@@ -173,7 +176,17 @@ const HomePage = () => {
                         >
                           Details
                         </div>
-                        <div className="mx-2 px-3 bg-[#e13453] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg">
+                        <div
+                          className="mx-2 px-3 bg-[#e13453] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg"
+                          onClick={() => {
+                            setCart([...cart, product])
+                            localStorage.setItem(
+                              "cart",
+                              JSON.stringify([...cart, product])
+                            ) // save to local storage
+                            toast.success("Added to cart✅")
+                          }}
+                        >
                           Add to Cart
                         </div>
                       </div>

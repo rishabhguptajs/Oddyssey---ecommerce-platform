@@ -24,6 +24,7 @@ import AllProducts from "./pages/Admin/Products.js"
 import UpdateProduct from "./pages/Admin/UpdateProduct.js"
 import Search from "./pages/Search.js"
 import ProductDetails from "./pages/ProductDetails.js"
+import CartPage from "./pages/CartPage.js"
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/policy" element={<Policy />} />
           <Route path="/contact" element={<Contact />} />
