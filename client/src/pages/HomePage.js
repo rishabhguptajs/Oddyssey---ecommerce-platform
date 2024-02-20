@@ -1,103 +1,105 @@
-import React, { Fragment, useEffect, useState } from "react";
-import Layout from "../components/Layouts/Layout";
-import axios from "axios";
-import { Checkbox, Radio } from "antd";
-import { Prices } from "../components/Prices";
+import React, { Fragment, useEffect, useState } from "react"
+import Layout from "../components/Layouts/Layout"
+import axios from "axios"
+import { Checkbox, Radio } from "antd"
+import { useNavigate } from "react-router-dom"
+import { Prices } from "../components/Prices"
 
 const HomePage = () => {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [checked, setChecked] = useState([]);
-  const [radio, setRadio] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
+  const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
+  const [checked, setChecked] = useState([])
+  const [radio, setRadio] = useState([])
+  const [total, setTotal] = useState(0)
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
 
   const getTotal = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/product-count");
-      setTotal(data?.total);
+      const { data } = await axios.get("/api/v1/product/product-count")
+      setTotal(data?.total)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const getCategories = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get("/api/v1/category/get-category")
       if (data?.success) {
-        setCategories(data.categories);
+        setCategories(data.categories)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   useEffect(() => {
-    getCategories();
-    getTotal();
-  }, []);
+    getCategories()
+    getTotal()
+  }, [])
 
   const getAllProducts = async () => {
     try {
-      setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
-      setLoading(false);
-      setProducts(data?.products);
+      setLoading(true)
+      const { data } = await axios.get(`/api/v1/product/product-list/${page}`)
+      setLoading(false)
+      setProducts(data?.products)
     } catch (error) {
-      setLoading(false);
-      console.log(error);
+      setLoading(false)
+      console.log(error)
     }
-  };
+  }
 
   const handleFilter = (value, id) => {
-    let all = [...checked];
+    let all = [...checked]
     if (value) {
-      all.push(id);
+      all.push(id)
     } else {
-      all = all.filter((c) => c !== id);
+      all = all.filter((c) => c !== id)
     }
-    setChecked(all);
-  };
+    setChecked(all)
+  }
 
   useEffect(() => {
-    if (!checked.length || !radio.length) getAllProducts();
-  }, [checked.length, radio.length]);
+    if (!checked.length || !radio.length) getAllProducts()
+  }, [checked.length, radio.length])
 
   useEffect(() => {
-    if (checked.length || radio.length) filterProduct();
+    if (checked.length || radio.length) filterProduct()
     // eslint-disable-next-line
-  }, [checked, radio]);
+  }, [checked, radio])
 
   const filterProduct = async () => {
     try {
       const { data } = await axios.post("/api/v1/product/product-filters", {
         checked,
         radio,
-      });
-      setProducts(data?.products);
+      })
+      setProducts(data?.products)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   useEffect(() => {
-    if (page === 1) return;
-    loadMore();
+    if (page === 1) return
+    loadMore()
     // eslint-disable-next-line
-  }, [page]);
+  }, [page])
 
   const loadMore = async () => {
     try {
-      setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
-      setLoading(false);
-      setProducts([...products, ...data?.products]);
+      setLoading(true)
+      const { data } = await axios.get(`/api/v1/product/product-list/${page}`)
+      setLoading(false)
+      setProducts([...products, ...data?.products])
     } catch (error) {
-      setLoading(false);
-      console.log(error);
+      setLoading(false)
+      console.log(error)
     }
-  };
+  }
 
   return (
     <Layout>
@@ -165,7 +167,10 @@ const HomePage = () => {
                         ₹ {product.price}
                       </div>
                       <div className="flex flex-row w-full justify-between">
-                        <div className="mx-2 px-4 bg-[#0a090a] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg text-sm">
+                        <div
+                          className="mx-2 px-4 bg-[#0a090a] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg text-sm"
+                          onClick={() => navigate(`/product/${product.slug}`)}
+                        >
                           Details
                         </div>
                         <div className="mx-2 px-3 bg-[#e13453] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg">
@@ -188,9 +193,9 @@ const HomePage = () => {
             <button
               className="bg-[#e13453] text-white px-4 py-2 transition-all hover:translate-y-[-2px] rounded"
               onClick={(e) => {
-                e.preventDefault();
-                setPage(page + 1);
-                setLoading(true);
+                e.preventDefault()
+                setPage(page + 1)
+                setLoading(true)
               }}
             >
               {loading ? "Loading..." : "Load More"}
@@ -199,7 +204,7 @@ const HomePage = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

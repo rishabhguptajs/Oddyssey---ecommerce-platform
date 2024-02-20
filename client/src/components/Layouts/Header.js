@@ -19,6 +19,7 @@ import {
 } from "@nextui-org/react";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
+import SearchInput from "../Form/SearchInput";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -125,20 +126,7 @@ const Header = () => {
             Contact Us
           </NavLink>
         </NavbarItem>
-        <NavbarItem>
-          <Input
-            classNames={{
-              base: "max-w-full sm:max-w-[10rem] h-10",
-              mainWrapper: "h-full",
-              input: "text-small",
-              inputWrapper:
-                "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-            }}
-            placeholder="Search for products..."
-            size="sm"
-            type="search"
-          />
-        </NavbarItem>
+        <SearchInput />
       </NavbarContent>
       <NavbarContent as="div" justify="end">
         {!auth.user ? (

@@ -233,15 +233,15 @@ export const productListController = async (req, res) => {
 
 export const searchProductController = async (req, res) => {
   try {
-    const search = req.params
-    const res = await productModel.find({
+    const search = req.params.keyword;
+    const results = await productModel.find({
       $or: [
         { name: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: 'i' } },
       ],
     }).select('-photo')
 
-    res.json(res);
+    res.json(results);
   } catch (error) {
     console.log(error)
     res.status(500).json({
