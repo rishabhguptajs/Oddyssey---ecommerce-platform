@@ -15,7 +15,7 @@ const CartPage = () => {
     try {
       let myCart = [...cart]
       let index = myCart.findIndex((p) => p._id === id)
-      myCart.remove(index, 1)
+      myCart.splice(index, 1)
       setCart(myCart)
       localStorage.setItem("cart", JSON.stringify(myCart))
     } catch (error) {
