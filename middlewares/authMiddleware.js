@@ -2,7 +2,6 @@ import JWT from 'jsonwebtoken';
 import userModel from '../models/userModel.js';
 
 // protected route here, based on token
-
 export const requireSignIn = async (req, res, next) => {
     try {
         const decode = JWT.verify(
@@ -17,7 +16,6 @@ export const requireSignIn = async (req, res, next) => {
 }
 
 // admin access middleware
-
 export const isAdmin = async (req, res, next) => {
     try {
         const user = await userModel.findById(req.user._id);

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Layout from "../../components/Layouts/Layout"
 import UserMenu from "./UserMenu"
 import { useAuth } from "../../context/auth"
@@ -17,22 +17,39 @@ const Profile = () => {
   const [address, setAddress] = useState("")
   const [password, setPassword] = useState("")
 
+  console.log(auth.user)
+
+  // fetch user data
+  useEffect(() => {
+    console.log(auth.user)
+    const { address, email, name, phone } = auth?.user
+    setName(name)
+    setEmail(email)
+    setPhone(phone)
+    setAddress(address)
+  }, [auth?.user])
+
   // handle submit
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post("/api/v1/auth/register", {
+      const res = await axios.put("/api/v1/auth/profile", {
         name,
         email,
         password,
         phone,
         address,
       })
-      // if (res && res.data.success) {
-      //   toast.success(res.data.message)
-      // } else {
-      //   toast.error(res.data.message)
-      // }
+      if (res?.error) {
+        toast.error(res.error)
+      } else {
+        setAuth({ ...auth, user: res?.updatedUser })
+        let ls = localStorage.getItem("auth")
+        ls = JSON.parse(ls)
+        ls.user = res.updatedUser
+        localStorage.setItem("auth", JSON.stringify(ls))
+        toast.success(res.message)
+      }
     } catch (error) {
       console.log(error)
       toast.error("Something went wrong!")
@@ -49,7 +66,6 @@ const Profile = () => {
           <div>
             <div className="align-middle rounded-lg flex flex-col items-center w-full p-3 h-full bg-[#e13453]">
               <form
-                action=""
                 className="align-middle bg-[#fdd7d8] w-fit px-5 py-2 flex flex-col items-center border-solid border-1 border-gray-400 mx-auto rounded-md shadow-[#e13453] shadow-medium"
                 onSubmit={handleSubmit}
               >
@@ -65,10 +81,8 @@ const Profile = () => {
                     type="text"
                     className="form-control w-[20vw] font_styling"
                     id="exampleInputName"
-                    aria-describedby="nameHelp"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    required
                   />
                   <label
                     htmlFor="exampleInputEmail1"
@@ -83,25 +97,9 @@ const Profile = () => {
                     aria-describedby="emailHelp"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
+                    disabled
                   />
-                  <div id="emailHelp" className="form-text font_styling">
-                    We'll never share your email with anyone else.
-                  </div>
-                  <label
-                    htmlFor="exampleInputPassword1"
-                    className="form-label w-[20vw] font_styling"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="exampleInputPassword1"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+
                   <label
                     htmlFor="inputPhone"
                     className="form-label w-[20vw] font_styling"
@@ -114,7 +112,6 @@ const Profile = () => {
                     id="inputPhone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    required
                   />
                   <label
                     htmlFor="inputAddress"
@@ -128,28 +125,12 @@ const Profile = () => {
                     id="inputAddress"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    required
                   />
-                  <label
-                    htmlFor="inputAnswer"
-                    className="form-label w-[20vw] font_styling"
-                  >
-                    Answer
-                  </label>
                 </div>
                 <button type="submit" className="btn btn-primary bg-blue-600">
-                  Submit
+                  UPDATE
                 </button>
               </form>
-              <div className="flex flex-row items-center mt-2">
-                <p className="py-1 mx-3 text-white">Already have an account?</p>
-                <Link
-                  to="/login"
-                  className="bg-[#210e11] px-4 py-2 text-white rounded-lg hover:bg-[#443a3c] hover:shadow-xl"
-                >
-                  Login
-                </Link>
-              </div>
             </div>
           </div>
         </div>
