@@ -2,10 +2,12 @@ import Layout from "../components/Layouts/Layout"
 import React from "react"
 import { useCart } from "../context/cart"
 import { useAuth } from "../context/auth"
+import { useNavigate } from "react-router-dom"
 
 const CartPage = () => {
   const [cart, setCart] = useCart()
   const [auth, setAuth] = useAuth()
+  const navigate = useNavigate()
 
   const total = () => {
     return cart.reduce((acc, item) => acc + item.price, 0)
@@ -56,15 +58,51 @@ const CartPage = () => {
             )}
           </div>
           <div className="">
-            <h1 className="border-b-3 p-4">Checkout | Payment</h1>
+            <h1 className="border-b-3 p-3 m-3 text-center text-[1.5em] h-[2em] font_styling">
+              Checkout | Payment
+            </h1>
             <div className="flex flex-col">
               <div className="flex mt-10 mb-2">
                 <h2 className="font-bold text-[2em]">Total -</h2>
                 <h2 className="font-bold text-[2em]">&nbsp; ₹{total()}</h2>
               </div>
-              <button className="bg-[#e13453] text-white px-4 py-2 transition-all hover:translate-y-[-2px] rounded">
-                Checkout
-              </button>
+              {auth?.user?.address ? (
+                <div className="flex flex-col h-[3em]">
+                  <div>
+                    <h2 className="text-lg font-bold">Delivery Address</h2>
+                    <div className="flex flex-row align-middle justify-center">
+                      <p>{auth?.user?.address}</p>
+                      <button
+                        className="w-fit h-fit mx-8 hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
+                        onClick={() => navigate("/dashboard/user/profile")}
+                      >
+                        UPDATE ADDRESS
+                      </button>
+                    </div>
+                  </div>
+                  <button className="bg-[#e13453] my-8 text-white px-4 py-2 transition-all hover:translate-y-[-2px] rounded">
+                    Checkout
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  {auth?.token ? (
+                    <button
+                      className="w-fit h-fit mx-8 hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
+                      onClick={() => navigate("/dashboard/user/profile")}
+                    >
+                      ADD ADDRESS
+                    </button>
+                  ) : (
+                    <button
+                      className="w-fit h-fit mx-8 hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
+                      onClick={() => navigate("/login")}
+                    >
+                      LOGIN TO CHECKOUT
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
