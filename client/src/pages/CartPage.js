@@ -80,7 +80,10 @@ const CartPage = () => {
                       </button>
                     </div>
                   </div>
-                  <button className="bg-[#e13453] my-8 text-white px-4 py-2 transition-all hover:translate-y-[-2px] rounded">
+                  <button 
+                    className="bg-[#e13453] my-8 text-white px-4 py-2 transition-all hover:translate-y-[-2px] rounded"
+                    onClick={() => navigate("/checkout", {state: {total: total()}})}
+                  >
                     Checkout
                   </button>
                 </div>
@@ -96,7 +99,9 @@ const CartPage = () => {
                   ) : (
                     <button
                       className="w-fit h-fit mx-8 hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
-                      onClick={() => navigate("/login")}
+                      onClick={() => navigate("/login", {
+                        state: "/cart",
+                      })}
                     >
                       LOGIN TO CHECKOUT
                     </button>
