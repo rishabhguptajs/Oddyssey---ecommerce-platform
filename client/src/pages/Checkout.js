@@ -25,7 +25,7 @@ const Checkout = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: total }),
+      body: JSON.stringify({ amount: total, payment_method: "card" }),
     }).then(async (r) => {
       var { clientSecret } = await r.json()
       setClientSecret(clientSecret)
