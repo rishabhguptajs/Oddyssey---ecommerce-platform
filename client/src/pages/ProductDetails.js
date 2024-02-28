@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react"
 import Layout from "../components/Layouts/Layout"
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import toast from "react-hot-toast"
+import { useCart } from "../context/cart"
 
 const ProductDetails = () => {
   const params = useParams()
+  const [cart, setCart] = useCart()
   const [product, setProduct] = useState({})
 
   useEffect(() => {
@@ -37,12 +40,16 @@ const ProductDetails = () => {
           </p>
 
           <div className="flex flex-row justify-between m-6">
-            <button className="bg-green-500 p-2 rounded-lg text-white font_styling">
+            <div
+              className="mx-2 px-3 bg-[#e13453] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg"
+              onClick={() => {
+                setCart([...cart, product])
+                localStorage.setItem("cart", JSON.stringify([...cart, product])) // save to local storage
+                toast.success("Added to cart✅")
+              }}
+            >
               Add to Cart
-            </button>
-            <button className="bg-blue-500 p-2 rounded-lg text-white font_styling">
-              Buy Now
-            </button>
+            </div>
           </div>
         </div>
       </div>

@@ -20,14 +20,6 @@ const UserMenu = () => {
             Profile
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            className="p-2 my-2 hover:shadow-md  transition-shadow  font_styling rounded-md justify-center border-solid border-2 border-[#7e7e7e] bg-[#ffe9ea] flex text-md"
-            to="/dashboard/user/orders"
-          >
-            Orders
-          </NavLink>
-        </li>
       </ul>
     </div>
   );

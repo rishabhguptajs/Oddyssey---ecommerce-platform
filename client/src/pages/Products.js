@@ -1,6 +1,6 @@
-import React from "react";
-import Layout from "../components/Layouts/Layout";
-import ProductComp from "../components/ReusableComp/ProductComp";
+import React from "react"
+import Layout from "../components/Layouts/Layout"
+import ProductComp from "../components/ReusableComp/ProductComp"
 
 const Products = () => {
   return (
@@ -8,7 +8,7 @@ const Products = () => {
       <div className="flex flex-col mx-2 align-middle justify-center text-center">
         <div className="mt-5 mb-4 text-[2em] cursor-default font_styling">
           {" "}
-          Products page{" "}
+          Products page - JUST AN EXAMPLE, NOT THE REAL VALUES OR PRODUCTS. <br /> (FOR REAL PRODUCTS, PLEASE USE THE HOMEPAGE OR SEARCH PAGE.)
         </div>
         <div className="flex flex-row flex-wrap">
           <ProductComp
@@ -24,7 +24,9 @@ const Products = () => {
           <ProductComp
             name={"Boat Earbuds"}
             price={"$39.00"}
-            img={"https://d2xamzlzrdbdbn.cloudfront.net/products/7d83d756-bad2-4491-8730-47282741df2f22220828_416x416.jpg"}
+            img={
+              "https://d2xamzlzrdbdbn.cloudfront.net/products/7d83d756-bad2-4491-8730-47282741df2f22220828_416x416.jpg"
+            }
             description={"Noise Cancellation, 24hr Battery Life"}
             rating={"⭐⭐⭐⭐⭐"}
             stock={true}
@@ -42,7 +44,9 @@ const Products = () => {
           <ProductComp
             name={"Boat Earbuds"}
             price={"$39.00"}
-            img={"https://d2xamzlzrdbdbn.cloudfront.net/products/7d83d756-bad2-4491-8730-47282741df2f22220828_416x416.jpg"}
+            img={
+              "https://d2xamzlzrdbdbn.cloudfront.net/products/7d83d756-bad2-4491-8730-47282741df2f22220828_416x416.jpg"
+            }
             description={"Noise Cancellation, 24hr Battery Life"}
             rating={"⭐⭐⭐⭐⭐"}
             stock={true}
@@ -60,7 +64,9 @@ const Products = () => {
           <ProductComp
             name={"Boat Earbuds"}
             price={"$39.00"}
-            img={"https://d2xamzlzrdbdbn.cloudfront.net/products/7d83d756-bad2-4491-8730-47282741df2f22220828_416x416.jpg"}
+            img={
+              "https://d2xamzlzrdbdbn.cloudfront.net/products/7d83d756-bad2-4491-8730-47282741df2f22220828_416x416.jpg"
+            }
             description={"Noise Cancellation, 24hr Battery Life"}
             rating={"⭐⭐⭐⭐⭐"}
             stock={true}
@@ -78,7 +84,9 @@ const Products = () => {
           <ProductComp
             name={"Boat Earbuds"}
             price={"$39.00"}
-            img={"https://d2xamzlzrdbdbn.cloudfront.net/products/7d83d756-bad2-4491-8730-47282741df2f22220828_416x416.jpg"}
+            img={
+              "https://d2xamzlzrdbdbn.cloudfront.net/products/7d83d756-bad2-4491-8730-47282741df2f22220828_416x416.jpg"
+            }
             description={"Noise Cancellation, 24hr Battery Life"}
             rating={"⭐⭐⭐⭐⭐"}
             stock={true}
@@ -86,7 +94,7 @@ const Products = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products
