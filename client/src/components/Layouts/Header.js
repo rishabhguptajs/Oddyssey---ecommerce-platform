@@ -25,7 +25,7 @@ import { useCart } from "../../context/cart"
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const [auth, setAuth] = useAuth()
-  const [ cart ] = useCart();
+  const [cart] = useCart()
 
   const menuItems = ["Categories", "About Us", "Contact Us"]
 
@@ -40,11 +40,7 @@ const Header = () => {
   }
 
   return (
-    <Navbar
-      className="rounded-b-md shadow-sm"
-      isMenuOpen={isMenuOpen}
-      onMenuOpenChange={setIsMenuOpen}
-    >
+    <Navbar className="rounded-b-md shadow-sm">
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -57,16 +53,16 @@ const Header = () => {
         </p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
+        <NavbarItem className="hidden sm:flex">
           <NavLink
             to="/products"
             color="foreground"
-            className="hover:text-[#e13453] font_styling flex items-center px-1 transition-colors"
+            className="hover:text-[#e13453] font_styling px-1 transition-colors"
           >
             Products
           </NavLink>
         </NavbarItem>
-        <NavbarItem>
+        <NavbarItem className="hidden sm:flex">
           <NavLink
             to="/about"
             color="foreground"
@@ -75,7 +71,7 @@ const Header = () => {
             About Us
           </NavLink>
         </NavbarItem>
-        <NavbarItem>
+        <NavbarItem className="hidden sm:flex">
           <NavLink
             to="/contact"
             color="foreground"
@@ -148,9 +144,10 @@ const Header = () => {
         )}
       </NavbarContent>
 
-      <NavbarMenu>
-        {menuItems.map((item, index) => {
-          ;<NavbarMenuItem key={`${item}-${index}`}>
+      {/* Adjusted NavbarMenu */}
+      <NavbarMenu className="sm:hidden">
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               className="w-full"
               href="#"
@@ -166,7 +163,7 @@ const Header = () => {
               {item}
             </Link>
           </NavbarMenuItem>
-        })}
+        ))}
       </NavbarMenu>
     </Navbar>
   )

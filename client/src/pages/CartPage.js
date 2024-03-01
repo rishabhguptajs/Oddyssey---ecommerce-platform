@@ -28,61 +28,65 @@ const CartPage = () => {
     <Layout>
       <div className="container">
         <h1 className="font_styling mx-4 my-2">Your Cart</h1>
-        <div className="flex flex-row">
-          <div className="grid grid-cols-3 gap-4 w-[60vw] m-4 mt-2">
-            {cart.map((item) => (
-              <div key={item._id} className="border p-4">
-                <img
-                  src={`/api/v1/product/product-photo/${item._id}`}
-                  alt={item.name}
-                  className="w-full h-48 object-cover"
-                />
-                <h2 className="text-lg font-bold">{item.name}</h2>
-                <p className="text-sm text-gray-500">{item.description}</p>
-                <div className="flex justify-between">
-                  <p className="text-lg font-bold">₹{item.price}</p>
-                  <button
-                    className="bg-[#e13453] m-2 text-white px-4 py-2 transition-all hover:translate-y-[-2px] rounded"
-                    onClick={() => removeCartItem(item._id)}
-                  >
-                    Remove
-                  </button>
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-[60%] mx-4 mt-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {cart.map((item) => (
+                <div key={item._id} className="border p-4">
+                  <img
+                    src={`/api/v1/product/product-photo/${item._id}`}
+                    alt={item.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  <h2 className="text-lg font-bold">{item.name}</h2>
+                  <p className="text-sm text-gray-500">{item.description}</p>
+                  <div className="flex justify-between items-center">
+                    <p className="text-lg font-bold">₹{item.price}</p>
+                    <button
+                      className="bg-[#e13453] text-white px-4 py-2 transition-all hover:translate-y-[-2px] rounded"
+                      onClick={() => removeCartItem(item._id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
 
-            {cart.length === 0 && (
-              <div className="col-span-3 text-center">
-                <h2>Your cart is empty</h2>
-              </div>
-            )}
+              {cart.length === 0 && (
+                <div className="col-span-3 text-center">
+                  <h2>Your cart is empty</h2>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="">
-            <h1 className="border-b-3 p-3 m-3 text-center text-[1.5em] h-[2em] font_styling">
+          <div className="md:w-[40%] mx-4 mt-4 md:mt-0">
+            <h1 className="border-b-3 p-3 text-center text-[1.5em] h-[2em] font_styling">
               Checkout | Payment
             </h1>
-            <div className="flex flex-col">
-              <div className="flex mt-10 mb-2">
+            <div className="flex flex-col justify-between mt-10 mb-2">
+              <div className="flex">
                 <h2 className="font-bold text-[2em]">Total -</h2>
                 <h2 className="font-bold text-[2em]">&nbsp; ₹{total()}</h2>
               </div>
               {auth?.user?.address ? (
-                <div className="flex flex-col h-[3em]">
+                <div className="flex flex-col">
                   <div>
                     <h2 className="text-lg font-bold">Delivery Address</h2>
-                    <div className="flex flex-row align-middle justify-center">
+                    <div className="flex flex-row items-center justify-between">
                       <p>{auth?.user?.address}</p>
                       <button
-                        className="w-fit h-fit mx-8 hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
+                        className="hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
                         onClick={() => navigate("/dashboard/user/profile")}
                       >
                         UPDATE ADDRESS
                       </button>
                     </div>
                   </div>
-                  <button 
+                  <button
                     className="bg-[#e13453] my-8 text-white px-4 py-2 transition-all hover:translate-y-[-2px] rounded"
-                    onClick={() => navigate("/checkout", {state: {total: total()}})}
+                    onClick={() =>
+                      navigate("/checkout", { state: { total: total() } })
+                    }
                   >
                     Checkout
                   </button>
@@ -91,17 +95,15 @@ const CartPage = () => {
                 <div>
                   {auth?.token ? (
                     <button
-                      className="w-fit h-fit mx-8 hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
+                      className="hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
                       onClick={() => navigate("/dashboard/user/profile")}
                     >
                       ADD ADDRESS
                     </button>
                   ) : (
                     <button
-                      className="w-fit h-fit mx-8 hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
-                      onClick={() => navigate("/login", {
-                        state: "/cart",
-                      })}
+                      className="hover:translate-y-[-2px] transition-all rounded py-1 bg-[#e13453] text-[#ffe9ea] px-2"
+                      onClick={() => navigate("/login", { state: "/cart" })}
                     >
                       LOGIN TO CHECKOUT
                     </button>

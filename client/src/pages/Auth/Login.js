@@ -1,54 +1,53 @@
-import React, { useState } from "react";
-import Layout from "../../components/Layouts/Layout";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { useAuth } from "../../context/auth";
+import React, { useState } from "react"
+import Layout from "../../components/Layouts/Layout"
+import { useNavigate, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
+import toast from "react-hot-toast"
+import axios from "axios"
+import { useAuth } from "../../context/auth"
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [auth, setAuth] = useAuth();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [auth, setAuth] = useAuth()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const res = await axios.post("/api/v1/auth/login", {
         email,
         password,
-      });
+      })
       if (res && res.data.success) {
-        toast.success(res.data && res.data.message);
+        toast.success(res.data && res.data.message)
         setAuth({
           ...auth,
           user: res.data.user,
           token: res.data.token,
         })
         localStorage.setItem("auth", JSON.stringify(res.data))
-        navigate(location.state || "/");
+        navigate(location.state || "/")
       } else {
-        toast.error(res.data.message);
+        toast.error(res.data.message)
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong!");
+      console.log(error)
+      toast.error("Something went wrong!")
     }
-  };
-  console.log(process.env.REACT_API);
+  }
+  console.log(process.env.REACT_API)
   return (
     <Layout title={"Login | Oddyssey"}>
       <div className="align-middle p-5 rounded-lg flex flex-col items-center w-full h-[100vh] bg-[#e13453]">
         <form
           action=""
-          className="align-middle bg-[#fdd7d8] w-fit px-10 py-5 flex flex-col items-center border-solid border-1 border-gray-400 mx-auto rounded-md shadow-[#e13453] shadow-medium"
+          className="align-middle bg-[#fdd7d8] w-full md:w-fit px-4 md:px-10 py-5 flex flex-col items-center border-solid border-1 border-gray-400 mx-auto rounded-md shadow-[#e13453] shadow-medium"
           onSubmit={handleSubmit}
         >
           <h1 className="mb-2 font_styling">Login Form</h1>
-          <div className="mb-3">
-            
+          <div className="mb-3 w-full">
             <label
               htmlFor="exampleInputEmail1"
               className="font_styling form-label mt-4"
@@ -57,7 +56,7 @@ const Login = () => {
             </label>
             <input
               type="email"
-              className="form-control w-[20vw] font_styling"
+              className="form-control w-full md:w-[20vw] font_styling"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               value={email}
@@ -69,22 +68,23 @@ const Login = () => {
             </div>
             <label
               htmlFor="exampleInputPassword1"
-              className="form-label w-[20vw] font_styling mt-4"
+              className="form-label w-full md:w-[20vw] font_styling mt-4"
             >
               Password
             </label>
             <input
               type="password"
-              className="form-control"
+              className="form-control w-full"
               id="exampleInputPassword1"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            
-            
           </div>
-          <button type="submit" className="btn btn-primary mt-4 bg-blue-600">
+          <button
+            type="submit"
+            className="btn btn-primary mt-4 bg-blue-600 w-full md:w-auto"
+          >
             Submit
           </button>
         </form>
@@ -99,7 +99,7 @@ const Login = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
