@@ -18,7 +18,7 @@ const ProductDetails = () => {
 
   const getProduct = async () => {
     const { data } = await axios.get(
-      `/api/v1/product/get-product/${params.slug}`
+      `${process.env.REACT_API}/api/v1/product/get-product/${params.slug}`
     )
     setProduct(data?.product)
   }
