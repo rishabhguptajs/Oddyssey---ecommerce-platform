@@ -24,7 +24,7 @@ const UpdateProduct = () => {
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
+        `${process.env.REACT_API}/api/v1/product/get-product/${params.slug}`
       );
       setName(data.product.name);
       setId(data.product._id);
@@ -47,7 +47,7 @@ const UpdateProduct = () => {
   // function for getting all categories
   const getCategories = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${process.env.REACT_API}/api/v1/category/get-category`);
       if (data?.success) {
         setCategories(data.categories);
       }
@@ -74,7 +74,7 @@ const UpdateProduct = () => {
       photo && productData.append("photo", photo);
       productData.append("category", category);
       const { data } = await axios.put(
-        `/api/v1/product/update-product/${id}`,
+        `${process.env.REACT_API}/api/v1/product/update-product/${id}`,
         productData
       );
       if (data?.success) {
@@ -92,7 +92,7 @@ const UpdateProduct = () => {
     try {
       let answer = window.prompt("Are You Sure want to delete this product ? ");
       if (!answer) return;
-      await axios.delete(`/api/v1/product/delete-product/${id}`);
+      await axios.delete(`${process.env.REACT_API}/api/v1/product/delete-product/${id}`);
       navigate("/dashboard/admin/products");
       toast.success("Product deleted Succfully");
     } catch (error) {
