@@ -21,7 +21,7 @@ const HomePage = () => {
 
   const getTotal = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_API}/api/v1/product/product-count`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-count`)
       if (data && typeof data.total === 'number') {
         setTotal(data.total)
       } else {
@@ -35,7 +35,7 @@ const HomePage = () => {
 
   const getCategories = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_API}/api/v1/category/get-category`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/category/get-category`)
       if (data?.success && Array.isArray(data.categories)) {
         setCategories(data.categories)
       } else {
@@ -55,7 +55,7 @@ const HomePage = () => {
   const getAllProducts = async () => {
     try {
       setLoading(true)
-      const { data } = await axios.get(`${process.env.REACT_API}/api/v1/product/product-list/${page}`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`)
       if (data?.products && Array.isArray(data.products)) {
         setProducts(data.products)
       } else {
@@ -85,7 +85,7 @@ const HomePage = () => {
   const filterProduct = async () => {
     try {
       setLoading(true)
-      const { data } = await axios.post(`${process.env.REACT_API}/api/v1/product/product-filters`, {
+      const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/product-filters`, {
         checked,
         radio,
       })
@@ -110,7 +110,7 @@ const HomePage = () => {
   const loadMore = async () => {
     try {
       setLoading(true)
-      const { data } = await axios.get(`${process.env.REACT_API}/api/v1/product/product-list/${page}`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`)
       if (data?.products && Array.isArray(data.products)) {
         setProducts(prevProducts => [...prevProducts, ...data.products])
       } else {
