@@ -33,7 +33,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.put("/api/v1/auth/profile", {
+      const res = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/profile`, {
         name,
         email,
         password,
