@@ -18,7 +18,7 @@ const ProductDetails = () => {
 
   const getProduct = async () => {
     const { data } = await axios.get(
-      `${process.env.REACT_API}/api/v1/product/get-product/${params.slug}`
+      `${process.env.REACT_APP_API}/api/v1/product/get-product/${params.slug}`
     )
     setProduct(data?.product)
   }
@@ -28,7 +28,7 @@ const ProductDetails = () => {
       <div className="container flex flex-col md:flex-row m-4">
   <img
     className="card-img-top w-full md:w-[30em] h-auto md:h-[30em] m-2 rounded border-2"
-    src={`/api/v1/product/product-photo/${product._id}`}
+    src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
     alt={product.name}
   />
   <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full md:ml-4">
