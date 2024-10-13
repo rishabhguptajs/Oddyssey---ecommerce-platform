@@ -56,13 +56,8 @@ const HomePage = () => {
   }
 
   const handleFilter = (value, id) => {
-    let all = [...checked]
-    if (value) {
-      all.push(id)
-    } else {
-      all = all.filter((c) => c !== id)
-    }
-    setChecked(all)
+    const updatedChecked = value ? [...checked, id] : checked.filter(c => c !== id)
+    setChecked(updatedChecked)
   }
 
   useEffect(() => {
@@ -97,7 +92,7 @@ const HomePage = () => {
       setLoading(true)
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`)
       setLoading(false)
-      setProducts([...products, ...data?.products])
+      setProducts(prevProducts => [...prevProducts, ...data?.products])
     } catch (error) {
       setLoading(false)
       console.log(error)
@@ -106,112 +101,97 @@ const HomePage = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col text-center">
-  <div className="mx-4 my-6 text-center">
-    <h1 className="text-3xl font-bold m-3 font_styling">Welcome home!</h1>
-    <p className="font-serif">
-      Explore some of our most popular products and categories below, or
-      use the search bar to find exactly what you're looking for.
-    </p>
-  </div>
-  <div className="flex flex-col md:flex-row mx-4 my-6 md:mx-10 w-full">
-    <div className="w-full md:w-1/3 bg-slate-300 p-4 rounded-lg text-gray-800 font_styling">
-      <div className="font_styling">Filter by Category</div>
-      <div className="flex flex-col p-2 font_styling">
-        {categories?.map((category) => (
-          <Checkbox
-            key={category._id}
-            onChange={(e) => handleFilter(e.target.checked, category._id)}
-          >
-            {category.name}
-          </Checkbox>
-        ))}
-      </div>
-      <div className="font_styling">Filter by Price</div>
-      <Radio.Group
-        className="flex flex-col p-2 font_styling"
-        onChange={(e) => setRadio(e.target.value)}
-      >
-        {Prices?.map((price) => (
-          <Fragment key={price._id}>
-            <Radio value={price.array}>{price.name}</Radio>
-          </Fragment>
-        ))}
-      </Radio.Group>
-      <button
-        className="text-[#ae233c] bg-[#ffe9ea] px-3 py-2 my-3 rounded hover:shadow-sm hover:translate-y-[-2px] transition-all"
-        onClick={() => window.location.reload()}
-      >
-        Reset
-      </button>
-    </div>
-    <div className="mx-4 my-6 md:mx-10 w-full md:w-2/3 bg-slate-300 p-3 rounded-lg text-gray-800 font_styling">
-      <div>All Products</div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center text-center">
-        {products.length > 0 ? (
-          products.map((product) => (
-            <div key={product._id} className="card m-2">
-              <img
-                className="card-img-top"
-                src={`/api/v1/product/product-photo/${product._id}`}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.description.substring(0, 30)}</p>
-                <div
-                  href="#"
-                  className="bg-gray-900 hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg m-2"
+      <div className="flex flex-col text-center p-4">
+        <h1 className="text-4xl font-bold mb-2">Welcome home!</h1>
+        <p className="text-lg mb-6">Explore our popular products and categories below, or use the search bar to find what you're looking for.</p>
+        <div className="flex flex-col md:flex-row justify-between">
+          <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-lg shadow-md">
+            <h2 className="font-semibold mb-2">Filter by Category</h2>
+            <div className="flex flex-col mb-4">
+              {categories?.map((category) => (
+                <Checkbox
+                  key={category._id}
+                  onChange={(e) => handleFilter(e.target.checked, category._id)}
                 >
-                  ₹ {product.price}
-                </div>
-                <div className="flex flex-row w-full justify-between">
-                  <div
-                    className="mx-2 px-4 bg-[#0a090a] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg text-sm"
-                    onClick={() => navigate(`/product/${product.slug}`)}
-                  >
-                    Details
-                  </div>
-                  <div
-                    className="mx-2 px-3 bg-[#e13453] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg"
-                    onClick={() => {
-                      setCart([...cart, product])
-                      localStorage.setItem(
-                        "cart",
-                        JSON.stringify([...cart, product])
-                      )
-                      toast.success("Added to cart✅")
-                    }}
-                  >
-                    Add to Cart
-                  </div>
-                </div>
-              </div>
+                  {category.name}
+                </Checkbox>
+              ))}
             </div>
-          ))
-        ) : (
-          <span className="my-10 text-2xl font_styling">
-            No products found
-          </span>
-        )}
+            <h2 className="font-semibold mb-2">Filter by Price</h2>
+            <Radio.Group
+              className="flex flex-col mb-4"
+              onChange={(e) => setRadio(e.target.value)}
+            >
+              {Prices?.map((price) => (
+                <Fragment key={price._id}>
+                  <Radio value={price.array}>{price.name}</Radio>
+                </Fragment>
+              ))}
+            </Radio.Group>
+            <button
+              className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
+              onClick={() => window.location.reload()}
+            >
+              Reset
+            </button>
+          </div>
+          <div className="w-full md:w-2/3 bg-gray-200 p-4 rounded-lg shadow-md">
+            <h2 className="font-semibold mb-2">All Products</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <div key={product._id} className="card p-2 border rounded-lg shadow-sm">
+                    <img
+                      className="w-full h-48 object-cover rounded-t-lg"
+                      src={`/api/v1/product/product-photo/${product._id}`}
+                      alt={product.name}
+                    />
+                    <div className="p-2">
+                      <h5 className="font-semibold">{product.name}</h5>
+                      <p className="text-sm text-gray-600">{product.description.substring(0, 30)}...</p>
+                      <div className="text-lg font-bold my-2">₹ {product.price}</div>
+                      <div className="flex justify-between">
+                        <button
+                          className="bg-gray-800 text-white py-1 px-2 rounded hover:bg-gray-700 transition"
+                          onClick={() => navigate(`/product/${product.slug}`)}
+                        >
+                          Details
+                        </button>
+                        <button
+                          className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 transition"
+                          onClick={() => {
+                            setCart([...cart, product])
+                            localStorage.setItem("cart", JSON.stringify([...cart, product]))
+                            toast.success("Added to cart✅")
+                          }}
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <span className="my-10 text-xl">No products found</span>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center mt-4">
+          {products && products.length < total && (
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+              onClick={(e) => {
+                e.preventDefault()
+                setPage(page + 1)
+                setLoading(true)
+              }}
+            >
+              {loading ? "Loading..." : "Load More"}
+            </button>
+          )}
+        </div>
       </div>
-    </div>
-  </div>
-  <div className="flex justify-center">
-    {products && products.length < total && (
-      <button
-        className="bg-[#e13453] text-white px-4 py-2 mt-4 transition-all hover:translate-y-[-2px] rounded"
-        onClick={(e) => {
-          e.preventDefault()
-          setPage(page + 1)
-          setLoading(true)
-        }}
-      >
-        {loading ? "Loading..." : "Load More"}
-      </button>
-    )}
-  </div>
-</div>
-
     </Layout>
   )
 }

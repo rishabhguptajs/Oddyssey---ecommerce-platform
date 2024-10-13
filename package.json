@@ -8,7 +8,11 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm start --prefix ./client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm install && cd client && npm install && npm run build",
+    "build:server": "npm install",
+    "build:client": "cd client && npm install && npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build:client"
   },
   "keywords": [],
   "author": "Rishabh",
