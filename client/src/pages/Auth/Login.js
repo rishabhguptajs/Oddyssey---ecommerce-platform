@@ -37,7 +37,7 @@ const Login = () => {
       toast.error("Something went wrong!")
     }
   }
-  console.log(process.env.REACT_API)
+  console.log(process.env.REACT_APP_API)
   return (
     <Layout title={"Login | Oddyssey"}>
       <div className="align-middle p-5 rounded-lg flex flex-col items-center w-full h-[100vh] bg-[#e13453]">
