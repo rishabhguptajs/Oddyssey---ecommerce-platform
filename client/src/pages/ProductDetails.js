@@ -25,36 +25,43 @@ const ProductDetails = () => {
 
   return (
     <Layout title={`${product.name} | Oddyssey`}>
-      <div className="container flex flex-col md:flex-row m-4">
-  <img
-    className="card-img-top w-full md:w-[30em] h-auto md:h-[30em] m-2 rounded border-2"
-    src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
-    alt={product.name}
-  />
-  <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full md:ml-4">
-    <div className="md:w-[70%]">
-      <h1 className="my-2 mx-6">{product.name}</h1>
-      <p className="p-4 my-2 mx-6 bg-red-100 font_styling">
-        <div>Description - {product.description}</div>
-        <div>Price - ${product.price}</div>
-        <div>Category - {product.category?.name}</div>
-      </p>
-    </div>
-    <div className="flex flex-row justify-end md:w-[30%] md:mt-0 mt-4">
-      <div
-        className="mx-2 px-3 bg-[#e13453] hover:translate-y-[-2px] hover:cursor-pointer transition-all hover:shadow-md text-white font_styling p-2 rounded-lg"
-        onClick={() => {
-          setCart([...cart, product])
-          localStorage.setItem("cart", JSON.stringify([...cart, product])) // save to local storage
-          toast.success("Added to cart✅")
-        }}
-      >
-        Add to Cart
+      <div className="flex justify-center items-center min-h-[70vh] bg-gray-50 py-8 px-2">
+        <div className="bg-white rounded-2xl shadow-lg max-w-3xl w-full flex flex-col md:flex-row gap-8 p-8">
+          {product._id && (
+            <div className="flex-1 flex items-center justify-center">
+              <img
+                className="object-contain rounded-xl max-h-80 w-full bg-gray-100"
+                src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
+                alt={product.name}
+                onError={e => { e.target.onerror = null; e.target.src = '/placeholder-image.jpg'; }}
+              />
+            </div>
+          )}
+          <div className="flex-1 flex flex-col justify-between">
+            <div>
+              <h1 className="text-3xl font-bold font_styling mb-2">{product.name}</h1>
+              <p className="text-gray-500 text-lg mb-4 font_styling">{product.description}</p>
+              <div className="mb-4">
+                <span className="text-gray-400 font_styling">Category: </span>
+                <span className="font_styling">{product.category?.name}</span>
+              </div>
+              <div className="mb-6">
+                <span className="text-2xl font-bold text-[#e13453] font_styling">₹ {product.price}</span>
+              </div>
+            </div>
+            <button
+              className="w-full py-3 rounded-lg bg-[#e13453] text-white font_styling text-lg font-semibold hover:bg-[#ae233c] transition"
+              onClick={() => {
+                setCart([...cart, product])
+                localStorage.setItem("cart", JSON.stringify([...cart, product]))
+                toast.success("Added to cart✅")
+              }}
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-
     </Layout>
   )
 }
