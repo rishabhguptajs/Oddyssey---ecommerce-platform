@@ -79,15 +79,27 @@ const HomePage = () => {
   }, [checked.length, radio.length])
 
   useEffect(() => {
-    if (checked.length || radio.length) filterProduct()
+    if (checked.length || radio.length) {
+      setPage(1); // Reset to first page on filter
+      filterProduct()
+    }
   }, [checked, radio])
 
   const filterProduct = async () => {
     try {
       setLoading(true)
+      // Convert radio value to array of numbers if it's a string
+      let priceRange = radio
+      if (typeof priceRange === 'string') {
+        try {
+          priceRange = JSON.parse(priceRange)
+        } catch {
+          priceRange = []
+        }
+      }
       const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/product-filters`, {
         checked,
-        radio,
+        radio: priceRange,
       })
       if (data?.products && Array.isArray(data.products)) {
         setProducts(data.products)
@@ -154,98 +166,114 @@ const HomePage = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col text-center p-4">
-        <h1 className="text-4xl font-bold mb-2">Welcome home!</h1>
-        <p className="text-lg mb-6">Explore our popular products and categories below, or use the search bar to find what you're looking for.</p>
-        <div className="flex flex-col md:flex-row justify-between">
-          <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-lg shadow-md">
-            <h2 className="font-semibold mb-2">Filter by Category</h2>
-            <div className="flex flex-col mb-4">
-              {categories?.map((category) => (
-                <Checkbox
-                  key={category._id}
-                  onChange={(e) => handleFilter(e.target.checked, category._id)}
-                >
-                  {category.name}
-                </Checkbox>
-              ))}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl md:text-5xl font-bold font_styling mb-2">Discover Unique Products</h1>
+          <p className="text-gray-500 text-lg md:text-xl font_styling">Curated, quality goods from passionate makers. No clutter, just what matters.</p>
+        </div>
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Filters Sidebar */}
+          <div className="md:w-1/4 w-full">
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mb-6 md:sticky md:top-24">
+              <h2 className="text-lg font-semibold mb-4 font_styling">Filter by Category</h2>
+              <div className="flex flex-col gap-2 mb-6">
+                {categories?.map((category) => (
+                  <Checkbox
+                    key={category._id}
+                    onChange={(e) => handleFilter(e.target.checked, category._id)}
+                    className="font_styling"
+                  >
+                    {category.name}
+                  </Checkbox>
+                ))}
+              </div>
+              <h2 className="text-lg font-semibold mb-4 font_styling">Filter by Price</h2>
+              <Radio.Group
+                className="flex flex-col gap-2 mb-6"
+                onChange={(e) => setRadio(e.target.value)}
+                value={radio}
+              >
+                {Prices?.map((price) => (
+                  <Fragment key={price._id}>
+                    <Radio value={JSON.stringify(price.array)} className="font_styling">{price.name}</Radio>
+                  </Fragment>
+                ))}
+              </Radio.Group>
+              <button
+                className="w-full bg-[#e13453] text-white py-2 rounded-lg font_styling hover:bg-[#ae233c] transition"
+                onClick={() => window.location.reload()}
+              >
+                Reset Filters
+              </button>
             </div>
-            <h2 className="font-semibold mb-2">Filter by Price</h2>
-            <Radio.Group
-              className="flex flex-col mb-4"
-              onChange={(e) => setRadio(e.target.value)}
-            >
-              {Prices?.map((price) => (
-                <Fragment key={price._id}>
-                  <Radio value={price.array}>{price.name}</Radio>
-                </Fragment>
-              ))}
-            </Radio.Group>
-            <button
-              className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
-              onClick={() => window.location.reload()}
-            >
-              Reset
-            </button>
           </div>
-          <div className="w-full md:w-2/3 bg-gray-200 p-4 rounded-lg shadow-md">
-            <h2 className="font-semibold mb-2">All Products</h2>
-            {loading ? (
-              <div className="text-center">Loading...</div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {products.length > 0 ? (
-                  products.map((product) => (
-                    <div key={product._id} className="card p-2 border rounded-lg shadow-sm">
+          {/* Products Grid */}
+          <div className="md:w-3/4 w-full">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold font_styling">All Products</h2>
+              {loading && <span className="text-gray-400 text-sm">Loading...</span>}
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <div
+                    key={product._id}
+                    className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 flex flex-col h-full"
+                  >
+                    <div className="w-full aspect-square mb-4 flex items-center justify-center bg-gray-50 rounded-lg overflow-hidden">
                       <img
-                        className="w-full h-48 object-cover rounded-t-lg"
-                        src={`/api/v1/product/product-photo/${product._id}`}
+                        className="object-contain max-h-48 w-full"
+                        src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
                         alt={product.name}
                         onError={(e) => {
                           e.target.onerror = null
                           e.target.src = '/placeholder-image.jpg'
                         }}
                       />
-                      <div className="p-2">
-                        <h5 className="font-semibold">{product.name}</h5>
-                        <p className="text-sm text-gray-600">{product.description?.substring(0, 30) || "No description available"}...</p>
-                        <div className="text-lg font-bold my-2">₹ {product.price || "Price not available"}</div>
-                        <div className="flex justify-between">
-                          <button
-                            className="bg-gray-800 text-white py-1 px-2 rounded hover:bg-gray-700 transition"
-                            onClick={() => navigate(`/product/${product.slug}`)}
-                          >
-                            Details
-                          </button>
-                          <button
-                            className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 transition"
-                            onClick={() => addToCart(product)}
-                          >
-                            Add to Cart
-                          </button>
-                        </div>
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h5 className="font-semibold text-lg font_styling mb-1 truncate">{product.name}</h5>
+                        <p className="text-gray-500 text-sm mb-2 font_styling truncate">{product.description?.substring(0, 60) || "No description available"}...</p>
+                      </div>
+                      <div className="flex items-center justify-between mt-2 gap-2">
+                        <span className="text-xl font-bold font_styling text-[#e13453]">₹ {product.price || "-"}</span>
+                      </div>
+                      <div className="flex gap-2 mt-3">
+                        <button
+                          className="flex-1 px-0 py-2 rounded-lg border border-gray-300 text-gray-700 font_styling bg-white hover:bg-gray-100 transition text-sm"
+                          onClick={() => navigate(`/product/${product.slug}`)}
+                        >
+                          Details
+                        </button>
+                        <button
+                          className="flex-1 px-0 py-2 rounded-lg bg-[#e13453] text-white font_styling hover:bg-[#ae233c] transition text-sm"
+                          onClick={() => addToCart(product)}
+                        >
+                          Add to Cart
+                        </button>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <span className="my-10 text-xl">No products found</span>
-                )}
-              </div>
-            )}
+                  </div>
+                ))
+              ) : (
+                <span className="my-10 text-xl text-gray-400 font_styling">No products found</span>
+              )}
+            </div>
+            <div className="flex justify-center mt-8">
+              {!loading && products && products.length < total && (
+                <button
+                  className="bg-[#e13453] text-white px-6 py-2 rounded-lg font_styling hover:bg-[#ae233c] transition"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setPage(page + 1)
+                  }}
+                >
+                  Load More
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="flex justify-center mt-4">
-          {!loading && products && products.length < total && (
-            <button
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-              onClick={(e) => {
-                e.preventDefault()
-                setPage(page + 1)
-              }}
-            >
-              Load More
-            </button>
-          )}
         </div>
       </div>
     </Layout>
