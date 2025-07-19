@@ -34,7 +34,7 @@ const CartPage = () => {
               {cart.map((item) => (
                 <div key={item._id} className="border p-4">
                   <img
-                    src={`/api/v1/product/product-photo/${item._id}`}
+                    src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${item._id}`}
                     alt={item.name}
                     className="w-full h-48 object-cover"
                   />
