@@ -2,7 +2,7 @@ export const Prices = [
   {
     _id: 0,
     name: "Any",
-    array: [0, 9999],
+    array: [0, 99999999],
   },
   {
     _id: 1,
@@ -27,6 +27,6 @@ export const Prices = [
   {
     _id: 5,
     name: "More than ₹799",
-    array: [799, 9999],
+    array: [799, 9999999],
   },
 ];
