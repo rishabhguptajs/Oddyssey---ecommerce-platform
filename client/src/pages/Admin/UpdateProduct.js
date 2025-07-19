@@ -149,7 +149,7 @@ const UpdateProduct = () => {
               />
             ) : (
               <img
-                src={`/api/v1/product/product-photo/${id}`}
+                src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${id}`}
                 alt="product"
                 className="w-32 h-32 object-contain"
               />
